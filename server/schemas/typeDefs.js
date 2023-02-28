@@ -1,51 +1,49 @@
+const { gql } = require('apollo-server-express');
 
-const {gql} = require('apollo-server-express');
+//! Ask about adding Tasks to group type and chat messaged to Group type 
 
 const typeDefs = gql`
-type User {
+  type User {
     _id: ID
     username: String
     email: String
     password: String
-    ownedGroups: [Group]
-    groupsAsMember: [Group]
-    invites: [Invite]
-}
+    profilePicture: String
+    githubProfile: String
+    title: String
+    aboutMe: String
+    skills: [String]
+    invites: [ID]
+    ownedGroups: [ID]
+    groupsAsMember: [ID]
+  }
 
-type Group {
-    groupName: String
-    groupOwner: User
-    members: [User]
-    chatMessages: 
-}
+  type Group {
+    groupName: String 
+    type: String 
+    owner: String 
+    members: [ID]
+    invites: [ID]
+    tags: [String]
+  }
 
-type Message{
-    username: String
-    date: Date
-    message: String
-}
+  type Auth {
+    token: ID! 
+    user: User 
+  }
 
-type Invite{
-    groupId: String
-    user: 
-}
+  type Query {
+    me: User 
+    getProfile: User 
+    getAllOpenGroups: Group 
+    getSingleGroup: Group 
+  }
 
-type Query{
-    getUser(userId: ID!): User
-    getMessages(messageId: ID!): Message
-    getGroup(GroupId: ID!): Group
-}
+  type Mutation {
+    createUser(username: String!, email: String!, password: String!, profilePicture: String!): Auth 
+    login(email: String!, password: String!): Auth 
+    createGroup(groupName: String!, type: String!, owner: String!): User
+  }
+`;
 
-type Mutation{
-    createUser(username: String, email: String!, password: String!): Auth
-    createMessage(messageText: String!, user: String, groupId: String!): Message
-    createGroup(groupName: String!, owner: User!): Group
-    createInvite(groupId: String!, groupName: String! userId: String!)
-    login(email: String!, password: String!) : Auth
-}
-`
-
-module.exports = typeDefs
-
-
-
+module.exports = typeDefs;
