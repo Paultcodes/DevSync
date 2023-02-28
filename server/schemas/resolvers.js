@@ -5,14 +5,14 @@ const {AuthenticationError} = require("apollo-server-express")
 
 const resolvers = {
     Query: {
-        getSingleUser: async (parent, {user}) => {
+        getUser: async (parent, {user}) => {
             return await User.findOne({
                 $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
               });
         }
     },
     Mutation: {
-        addUser: async (parent, {username, email, password}) => {
+        createUser: async (parent, {username, email, password}) => {
             const user = await User.create({username: username, email: email, password: password});
             const token = signToken(user)
             return {user, token}
@@ -29,7 +29,28 @@ const resolvers = {
             }
             const token = signToken(user);
             return {token, user}
+        },
+
+        createMessage: async (parent, {messageText, user, groupId}, context) => {
+            if(context.user){
+                 const message = await Group.findOneAndUpdate({_id: groupId}, {$addToSet: {messageText, user, author: context.user.username}});
+                 if(message){
+                    return message
+            }
         }
+           
+
+        }, 
+
+        createGroup: async () => {
+
+        },
+
+        createInvite: async () => {
+
+        },
+
+        
     }
 }
 
