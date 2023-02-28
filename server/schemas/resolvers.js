@@ -1,1 +1,5 @@
-//!RESOLVERS GO HERE 
+//!RESOLVERS GO HERE
+
+const resolvers = {};
+
+module.exports = resolvers;
