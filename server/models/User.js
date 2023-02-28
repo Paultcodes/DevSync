@@ -1,25 +1,62 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+@.+\..+/, 'Must match an email address!'],
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 5,
+    },
+
+    profilePicture: {
+      type: String,
+      required: true,
+    },
+
+    githubProfile: {
+      type: String,
+    },
+
+    title: {
+      type: String,
+    },
+
+    aboutMe: {
+      type: String,
+    },
+
+    skills: [
+      {
+        type: String,
+      },
+    ],
+
+    invites: [
+      {
+        group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
+        timestamp: { type: Date, default: Date.now },
+      },
+    ],
+
+    ownedGroups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
+
+    groupsAsMember: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 5,
-  },
-});
+  { toJSON: { virtuals: true } }
+);
 
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
