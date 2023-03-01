@@ -1,58 +1,90 @@
-
-const {User, Group, Message, Invite } = require ('../models')
-const {signToken} = require('../utils/auth')
-const {AuthenticationError} = require("apollo-server-express")
+const { User, Group, HelpWanted } = require('../models');
+const { signToken } = require('../utils/auth');
+const { errorMessage } = require('./ErrorMessages');
+const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
-    Query: {
-        getUser: async (parent, {user}) => {
-            return await User.findOne({
-                $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
-              });
-        }
+  Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
-    Mutation: {
-        createUser: async (parent, {username, email, password}) => {
-            const user = await User.create({username: username, email: email, password: password});
-            const token = signToken(user)
-            return {user, token}
-        },
 
-        login: async (parent, {email, password}) => {
-            const user = await User.findOne({email});
-            if(!user){
-                throw new AuthenticationError("incorrect credentials")
-            }
-            const correctPw = await user.isCorrectPassword(password);
-            if(!correctPw) {
-                throw new AuthenticationError("incorrect credentials")
-            }
-            const token = signToken(user);
-            return {token, user}
-        },
+    getProfile: async (parent, { id }, context) => {
+      if (context.user) {
+        return await User.findOne({ _id: id });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
 
-        createMessage: async (parent, {messageText, user, groupId}, context) => {
-            if(context.user){
-                 const message = await Group.findOneAndUpdate({_id: groupId}, {$addToSet: {messageText, user, author: context.user.username}});
-                 if(message){
-                    return message
-            }
+    getAllOpenGroups: async (parent, args, context) => {
+      if (context.user) {
+        return await Group.find({type: 'open'});
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+
+    getSingleGroup: async (parent, { id }, context) => {
+      if (context.user) {
+        return await Group.findOne({ _id: id });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+  },
+
+  
+
+  Mutation: {
+    createUser: async (parent, { username, email, password, profilePicture }) => {
+      const user = await User.create({
+        username,
+        email,
+        password,
+        profilePicture,
+      });
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError(errorMessage.incorrectEmail);
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError(errorMessage.incorrectPassword);
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
+
+    createGroup: async (parent, { groupName, type, owner }, context) => {
+      if (context.user) {
+        const newGroup = await Group.create({ groupName, type, owner });
+
+        if (newGroup) {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { ownedGroups: newGroup._id } },
+            { new: true }
+          );
+
+          return updatedUser;
         }
-           
+      }
 
-        }, 
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+  },
+};
 
-        createGroup: async () => {
-
-        },
-
-        createInvite: async () => {
-
-        },
-
-        
-    }
-}
-
-module.exports = resolvers
-
+module.exports = resolvers;
