@@ -48,6 +48,7 @@ const userSchema = new Schema(
       {
         group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
         timestamp: { type: Date, default: Date.now },
+        status: { type: String, default: 'pending' },
       },
     ],
 

@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-//! Ask about adding Tasks to group type and chat messaged to Group type 
+//! Ask about adding Tasks to group type and chat messages to Group type
 
 const typeDefs = gql`
   type User {
@@ -13,18 +13,46 @@ const typeDefs = gql`
     title: String
     aboutMe: String
     skills: [String]
-    invites: [ID]
+    invites: [Invite]
     ownedGroups: [ID]
     groupsAsMember: [ID]
+  }
+
+  type userGroups {
+    owned: [Group]
+    groupAsMember: [Group]
+  }
+
+  type Tags {
+
+  }
+
+  type Message {
+    messageText: String 
+    to: String 
+    from: String 
+  }
+
+  type Invite {
+    date: Date 
+    user: User 
+    status: InviteStatus 
+  }
+
+  union InviteStatus = 'pending' | 'accepted' | 'declined'
+
+  type Member {
+    user: User 
   }
 
   type Group {
     groupName: String 
     type: String 
     owner: String 
-    members: [ID]
-    invites: [ID]
+    members: [Member]
+    invites: [Invite]
     tags: [String]
+    chatMessages: [Message]
   }
 
   type Auth {

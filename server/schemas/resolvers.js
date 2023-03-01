@@ -21,7 +21,7 @@ const resolvers = {
 
     getAllOpenGroups: async (parent, args, context) => {
       if (context.user) {
-        return await Group.find({});
+        return await Group.find({type: 'open'});
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
@@ -33,6 +33,8 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
   },
+
+  
 
   Mutation: {
     createUser: async (parent, { username, email, password, profilePicture }) => {
