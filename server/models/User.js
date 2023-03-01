@@ -23,7 +23,6 @@ const userSchema = new Schema(
 
     profilePicture: {
       type: String,
-      required: true,
     },
 
     githubProfile: {
