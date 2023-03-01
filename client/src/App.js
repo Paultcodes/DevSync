@@ -8,6 +8,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homesjsx from '../src/pages/Home/Homes';
+import SignUp from './pages/SignUp/SignUp';
 
 
 
@@ -39,7 +40,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Homesjsx/>
+      <Router>
+        <Routes>
+          <Route path='/signup' element={<SignUp/>}/>
+        </Routes>
+      </Router>
     
     </ApolloProvider>
   );

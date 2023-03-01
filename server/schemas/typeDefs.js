@@ -14,8 +14,8 @@ const typeDefs = gql`
     aboutMe: String
     skills: [String]
     invites: [Invite]
-    ownedGroups: [ID]
-    groupsAsMember: [ID]
+    ownedGroups: [userGroups]
+    groupsAsMember: [userGroups]
   }
 
   type userGroups {
@@ -24,6 +24,7 @@ const typeDefs = gql`
   }
 
   type Tags {
+    tag: String
 
   }
 
@@ -34,12 +35,12 @@ const typeDefs = gql`
   }
 
   type Invite {
-    date: Date 
+    date: String 
     user: User 
-    status: InviteStatus 
+    status: String
   }
 
-  union InviteStatus = 'pending' | 'accepted' | 'declined'
+  
 
   type Member {
     user: User 
@@ -68,7 +69,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!, profilePicture: String!): Auth 
+    createUser(username: String!, email: String!, password: String!): Auth 
     login(email: String!, password: String!): Auth 
     createGroup(groupName: String!, type: String!, owner: String!): User
   }
