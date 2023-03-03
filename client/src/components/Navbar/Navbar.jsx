@@ -51,7 +51,7 @@ const Navbar = () => {
         ) : (
           <div style={{ textAlign: 'center' }}>
             <li className="navbar-item">
-              <a onClick={auth.logout} href="/logout" className="navbar-link">
+              <a onClick={auth.logout} href="/login" className="navbar-link">
                 Login
               </a>
             </li>

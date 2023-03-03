@@ -6,6 +6,7 @@ export const loggedInContent = [
   { route: '/creategroup', name: 'Create Group' },
   { route: '/hyperdocs', name: 'Hyper Docs' },
   { route: '/notifications', name: 'Notifications' },
+  { route: '/login', name: 'Login' },
 ];
 
 
