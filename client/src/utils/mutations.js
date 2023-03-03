@@ -25,3 +25,17 @@ export const CREATE_GROUP = gql`
     }
   }
 `;
+export const LOGIN_USER = gql`
+  mutation loginUser($username: String!, $password: String!) {
+    loginUser(username: $username, password: $password) {
+      token
+      user {
+        _id
+        username
+        password
+      }
+    }
+  }
+`;
+        
+        
