@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,11 +8,13 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Homesjsx from '../src/pages/Home/Homes';
-import SignUp from './pages/SignUp/SignUp';
 
-
-
+import Navbar from './components/Navbar/Navbar';
+import HomePage from './pages/HomePage/HomePage';
+import GroupPage from './pages/GroupPage/GroupPage'
+import SignupPage from './pages/SignupPage/SignupPage';
+import CreateGroupPage from './pages/CreateGroup/CreateGroupPage';
+import MyGroupsPage from './pages/MyGroups/MyGroupsPage';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -40,12 +43,18 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <Routes>
-          <Route path='/signup' element={<SignUp/>}/>
-        </Routes>
-      </Router>
-    
+      <div>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path='/group' element={<GroupPage/>}/>
+            <Route path='/signup' element={<SignupPage/>}/>
+            <Route path='/creategroup' element={<CreateGroupPage/>}/>
+            <Route path='/test' element={<MyGroupsPage/>}/>
+          </Routes>
+        </Router>
+      </div>
     </ApolloProvider>
   );
 }

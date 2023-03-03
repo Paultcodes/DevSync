@@ -7,7 +7,7 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id });
+        return await User.findOne({ _id: context.user._id }).populate('ownedGroups')
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
@@ -21,28 +21,29 @@ const resolvers = {
 
     getAllOpenGroups: async (parent, args, context) => {
       if (context.user) {
-        return await Group.find({type: 'open'});
+        return await Group.find({ type: 'open' });
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getSingleGroup: async (parent, { id }, context) => {
-      if (context.user) {
-        return await Group.findOne({ _id: id });
-      }
-      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+
+    getSingleGroup: async (parent, { groupId }) => {
+      return await Group.findOne({ _id: groupId });
     },
   },
 
-  
-
   Mutation: {
-    createUser: async (parent, { username, email, password}) => {
-      console.log('asdfasdf')
+    createUser: async (
+      parent,
+      { username, email, password, firstName, lastName }
+    ) => {
+      console.log('asdfasdf');
       const user = await User.create({
         username,
         email,
         password,
+        firstName,
+        lastName,
       });
 
       const token = signToken(user);
@@ -67,9 +68,13 @@ const resolvers = {
       return { token, user };
     },
 
-    createGroup: async (parent, { groupName, type, owner }, context) => {
+    createGroup: async (parent, { groupName, type }, context) => {
       if (context.user) {
-        const newGroup = await Group.create({ groupName, type, owner });
+        const newGroup = await Group.create({
+          groupName,
+          type,
+          owner: context.user._id,
+        });
 
         if (newGroup) {
           const updatedUser = await User.findOneAndUpdate(

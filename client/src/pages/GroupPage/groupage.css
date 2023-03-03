@@ -1,0 +1,32 @@
+.main-group-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -2;
+}
+
+.main-group-div::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  background-color: pink;
+  inset: 0;
+  opacity: 60%;
+  background-image: url('../../images/backgroundImages/Fotor_AI\ \(5\).png');
+}
+
+
+.top-homepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+
+.content-section {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,50 @@
+.home {
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  position: relative;
+  isolation: isolate;
+  background-size: cover;
+  z-index: -1;
+  margin-top: 5px;
+  
+  
+}
+
+.home::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  background-color: pink;
+  inset: 0;
+  opacity: 60%;
+  border-radius: 10px;
+  background-image: url('../../images/backgroundImages/Fotor_AI\ \(5\).png');
+}
+
+
+.top-front-page {
+  margin-top: 5%;
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.greetings {
+  z-index: 0;
+}
+
+.bottom-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+  .top-front-page {
+    margin-top: 65%;
+    flex-direction: column;
+  }
+}

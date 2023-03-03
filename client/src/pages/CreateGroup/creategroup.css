@@ -1,0 +1,21 @@
+.create-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6rem;
+}
+
+.card-section {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.create-group-input {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+}

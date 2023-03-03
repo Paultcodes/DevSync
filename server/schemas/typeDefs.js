@@ -5,6 +5,8 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type User {
     _id: ID
+    firstName: String 
+    lastName: String
     username: String
     email: String
     password: String
@@ -12,15 +14,21 @@ const typeDefs = gql`
     githubProfile: String
     title: String
     aboutMe: String
-    skills: [String]
-    invites: [Invite]
-    ownedGroups: [userGroups]
-    groupsAsMember: [userGroups]
+    skills: [String]!
+    invites: [Invite]!
+    ownedGroups: [testGroup]!
+    groupsAsMember: [userGroups]!
+  }
+
+  type testGroup {
+    _id: ID 
+    groupName: String  
+
   }
 
   type userGroups {
-    owned: [Group]
-    groupAsMember: [Group]
+    owned: [Group]!
+    groupAsMember: [Group]!
   }
 
   type Tags {
@@ -50,10 +58,10 @@ const typeDefs = gql`
     groupName: String 
     type: String 
     owner: String 
-    members: [Member]
-    invites: [Invite]
-    tags: [String]
-    chatMessages: [Message]
+    members: [Member]!
+    invites: [Invite]!
+    tags: [String]!
+    chatMessages: [Message]!
   }
 
   type Auth {
@@ -69,9 +77,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth 
+    createUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth 
     login(email: String!, password: String!): Auth 
-    createGroup(groupName: String!, type: String!, owner: String!): User
+    createGroup(groupName: String!, type: String!): User
   }
 `;
 
