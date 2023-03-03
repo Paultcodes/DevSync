@@ -62,6 +62,7 @@ const typeDefs = gql`
   }
 
   type Group {
+    _id: ID 
     groupName: String 
     type: String 
     owner: String 
@@ -82,6 +83,7 @@ const typeDefs = gql`
     getAllOpenGroups: Group 
     getSingleGroup: Group 
     getAllUsers: [User]!
+    searchGroupName(groupName: String!): Group
   }
 
   type Mutation {

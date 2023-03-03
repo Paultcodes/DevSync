@@ -9,3 +9,13 @@
     display: flex;
     gap: 1rem;
 }
+
+.search-section {
+    margin-top: 3%;
+}
+
+.name-search {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}

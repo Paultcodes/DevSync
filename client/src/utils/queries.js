@@ -45,3 +45,13 @@ export const GET_PROFILE = gql`
  }                
 `;
 
+export const SEARCH_GROUP_NAME = gql `
+query searchGroupName($groupName: String!) {
+  searchGroupName(groupName: $groupName) {
+    _id 
+    groupName
+  }
+}
+
+`
+

@@ -35,6 +35,13 @@ const resolvers = {
     getAllUsers: async () => {
       return await User.find({});
     },
+
+    searchGroupName: async (parent, { groupName }, context) => {
+      if (context.user) {
+        return await Group.findOne({ groupName: groupName, type: 'open'  });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
   },
 
   Mutation: {
@@ -105,7 +112,7 @@ const resolvers = {
     },
 
     addTagsToUser: async (_, { tag }, context) => {
-      console.log(tag)
+      console.log(tag);
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
