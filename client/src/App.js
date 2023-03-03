@@ -14,6 +14,7 @@ import HomePage from './pages/HomePage/HomePage';
 import GroupPage from './pages/GroupPage/GroupPage'
 import SignupPage from './pages/SignupPage/SignupPage';
 import CreateGroupPage from './pages/CreateGroup/CreateGroupPage';
+import MyGroupsPage from './pages/MyGroups/MyGroupsPage';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -49,7 +50,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path='/group' element={<GroupPage/>}/>
             <Route path='/signup' element={<SignupPage/>}/>
-            <Route path='creategroup' element={<CreateGroupPage/>}/>
+            <Route path='/creategroup' element={<CreateGroupPage/>}/>
+            <Route path='/test' element={<MyGroupsPage/>}/>
           </Routes>
         </Router>
       </div>

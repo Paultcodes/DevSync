@@ -7,7 +7,7 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id });
+        return await User.findOne({ _id: context.user._id }).populate('ownedGroups')
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
@@ -26,11 +26,9 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getSingleGroup: async (parent, { id }, context) => {
-      if (context.user) {
-        return await Group.findOne({ _id: id });
-      }
-      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+
+    getSingleGroup: async (parent, { groupId }) => {
+      return await Group.findOne({ _id: groupId });
     },
   },
 

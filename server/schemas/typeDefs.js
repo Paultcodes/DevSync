@@ -14,15 +14,21 @@ const typeDefs = gql`
     githubProfile: String
     title: String
     aboutMe: String
-    skills: [String]
-    invites: [Invite]
-    ownedGroups: [userGroups]
-    groupsAsMember: [userGroups]
+    skills: [String]!
+    invites: [Invite]!
+    ownedGroups: [testGroup]!
+    groupsAsMember: [userGroups]!
+  }
+
+  type testGroup {
+    _id: ID 
+    groupName: String  
+
   }
 
   type userGroups {
-    owned: [Group]
-    groupAsMember: [Group]
+    owned: [Group]!
+    groupAsMember: [Group]!
   }
 
   type Tags {
@@ -52,10 +58,10 @@ const typeDefs = gql`
     groupName: String 
     type: String 
     owner: String 
-    members: [Member]
-    invites: [Invite]
-    tags: [String]
-    chatMessages: [Message]
+    members: [Member]!
+    invites: [Invite]!
+    tags: [String]!
+    chatMessages: [Message]!
   }
 
   type Auth {
