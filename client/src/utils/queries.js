@@ -15,3 +15,25 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const ALL_USERS = gql`
+ query getAllUsers {
+  getAllUsers {
+    _id 
+    username
+    firstName 
+    lastName
+  }
+ }                  
+`;
+
+
+export const GET_PROFILE = gql`
+ query getProfile($userId: ID!) {
+  getProfile(userId: $userId) {
+    _id 
+    username 
+  }
+ }                
+`;
+

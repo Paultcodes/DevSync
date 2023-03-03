@@ -2,14 +2,19 @@ import './profilepage.css';
 import ProfilePic from '../../images/alphabet/c.png';
 import { pics } from './pics';
 import { useQuery } from '@apollo/client';
-import { GET_ME } from '../../utils/queries';
+import { GET_PROFILE } from '../../utils/queries';
+import { useParams } from 'react-router-dom';
 
-const ProfilePage = () => {
-  const { loading, data } = useQuery(GET_ME);
+const UserProfile = () => {
+  const { userId } = useParams();
+  console.log(userId)
+  const { loading, data } = useQuery(GET_PROFILE, {
+    variables: { userId: userId },
+  });
 
-  const userData = data?.me || [];
+  const profileData = data?.getProfile || {};
 
-  console.log(userData)
+  console.log(profileData)
 
   return (
     <div className="profile-page">
@@ -18,12 +23,14 @@ const ProfilePage = () => {
         <div className="info-section">
           <h3>Profile</h3>
           <div>
-            <p>{userData.email}</p>
+            <p></p>
             <p>GitHub</p>
           </div>
         </div>
         <div className="text-align">
-          <h1>{userData.firstName} {userData.lastName}</h1>
+          <h1>
+            
+          </h1>
           <p>Software Engineer</p>
         </div>
       </div>
@@ -52,4 +59,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default UserProfile;
