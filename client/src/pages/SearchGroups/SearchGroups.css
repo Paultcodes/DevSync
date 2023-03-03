@@ -1,0 +1,11 @@
+.search-group-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-section {
+    display: flex;
+    gap: 1rem;
+}

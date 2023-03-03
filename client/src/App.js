@@ -18,6 +18,7 @@ import MyGroupsPage from './pages/MyGroups/MyGroupsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Test from './pages/Test/Test';
 import UserProfile from './pages/ProfilePage/UserProfile';
+import SearchGroupsPage from './pages/SearchGroups/SearchGroupsPage';
 import LoginPage from './pages/LoginPage/LoginPage'
 import ProfileSettings from './pages/ProfileSettings/ProfileSettings';
 
@@ -60,6 +61,7 @@ function App() {
             <Route path='/test' element={<MyGroupsPage/>}/>
             <Route path='/profile' element={<ProfilePage/>}/>
             <Route path='/login' element={<LoginPage/>}/>
+            <Route path='/searchgroups' element={<SearchGroupsPage/>}/>
             <Route path='/settings' element={<ProfileSettings/>}/>
             <Route path='/testtwo' element={<Test/>}/>
             <Route path='/profile/:userId' element={<UserProfile/>}/>

@@ -51,6 +51,7 @@ export const ButtonTwo = (props) => {
 export const ButtonThree = (props) => {
   return (
     <button
+    name={props.name}
       style={{
         backgroundColor: '#D63447',
         border: 'none',
