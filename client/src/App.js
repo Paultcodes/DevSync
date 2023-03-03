@@ -20,6 +20,7 @@ import Test from './pages/Test/Test';
 import UserProfile from './pages/ProfilePage/UserProfile';
 
 // Construct our main GraphQL API endpoint
+//test
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
