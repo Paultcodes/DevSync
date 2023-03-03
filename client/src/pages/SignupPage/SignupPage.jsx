@@ -24,6 +24,7 @@ const SignupPage = () => {
 
     console.log(formData);
 
+
     try {
       const { data } = await createUser({
         variables: { ...formData },

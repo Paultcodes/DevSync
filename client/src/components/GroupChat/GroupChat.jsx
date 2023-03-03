@@ -1,6 +1,6 @@
 import React from 'react';
 import './ChatBox.css';
-import { useEffect, useRef  } from 'react';
+import { useEffect, useRef } from 'react';
 
 function ChatBox(props) {
   const chatBoxRef = useRef(null);
@@ -8,7 +8,7 @@ function ChatBox(props) {
   useEffect(() => {
     chatBoxRef.current.scrollTo(0, chatBoxRef.current.scrollHeight);
   }, []);
-  
+
   const messages = [
     {
       type: 'private',
@@ -31,45 +31,45 @@ function ChatBox(props) {
       time: '12/34/34',
     },
     {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
-      {
-        type: 'private',
-        text: 'hello worl asdf lkajsdklfj lkasjdf',
-        time: '12/34/34',
-      },
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
+    {
+      type: 'private',
+      text: 'hello worl asdf lkajsdklfj lkasjdf',
+      time: '12/34/34',
+    },
   ];
 
   return (

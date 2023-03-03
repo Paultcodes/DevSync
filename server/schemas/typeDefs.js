@@ -71,9 +71,10 @@ const typeDefs = gql`
 
   type Query {
     me: User 
-    getProfile: User 
+    getProfile(userId: ID!): User 
     getAllOpenGroups: Group 
     getSingleGroup: Group 
+    getAllUsers: [User]!
   }
 
   type Mutation {

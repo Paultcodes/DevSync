@@ -7,16 +7,17 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id }).populate('ownedGroups')
+        return await User.findOne({ _id: context.user._id }).populate(
+          'ownedGroups'
+        );
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getProfile: async (parent, { id }, context) => {
-      if (context.user) {
-        return await User.findOne({ _id: id });
-      }
-      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    getProfile: async (parent, { userId }) => {
+      console.log(userId);
+
+      return await User.findOne({ _id: userId });
     },
 
     getAllOpenGroups: async (parent, args, context) => {
@@ -26,9 +27,12 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-
     getSingleGroup: async (parent, { groupId }) => {
       return await Group.findOne({ _id: groupId });
+    },
+
+    getAllUsers: async () => {
+      return await User.find({});
     },
   },
 
