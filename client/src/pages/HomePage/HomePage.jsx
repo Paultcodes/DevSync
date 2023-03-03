@@ -3,16 +3,30 @@ import './homepage.css';
 // import  cardContent  from '../../components/HomeCards/CardContent';
 import HomeCard from '../../components/HomeCards/HomeCard';
 import cardContent from '../../components/HomeCards/CardContent';
+import { useQuery } from '@apollo/client';
+import { GET_ME } from '../../utils/queries';
+import auth from '../../utils/auth';
 
 const HomePage = () => {
-  const loggedIn = true;
+  const { loading, data } = useQuery(GET_ME);
+  const userData = data?.me || [];
+  console.log(userData);
+
+  if (loading) {
+    return <h1>Loading</h1>
+  }
   return (
     <div className="home">
       <div className="top-front-page">
         <div className="greetings">
-          {loggedIn ? (
+          {auth.loggedIn() ? (
             <h1>
-              Welcome, Jon <br /> You have 7 new notifications
+              Welcome, {userData.firstName} <br />{' '}
+              {userData.invites.length === 0 ? (
+                <span>You have no new notifications</span>
+              ) : (
+                <span>You have new </span>
+              )}
             </h1>
           ) : (
             <h1>
@@ -22,7 +36,7 @@ const HomePage = () => {
           )}
         </div>
         <div>
-          {loggedIn ? (
+          {auth.loggedIn() ? (
             <h3>Read about whats new with DevSync</h3>
           ) : (
             <h2>Join for free today and connecting with other developer</h2>

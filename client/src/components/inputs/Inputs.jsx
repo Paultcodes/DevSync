@@ -5,6 +5,7 @@ export const InputOne = (props) => {
       placeholder={props.placeholder}
       value={props.value}
       name={props.name}
+      onFocus={props.onFocus}
       onChange={props.onChange}
       style={{
         backgroundColor: '#fff',
@@ -45,3 +46,32 @@ export const InputTwo = (props) => {
     />
   );
 };
+
+
+export const TextArea = ({ label, name, placeholder, value, onChange }) => {
+  const textareaStyle = {
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    padding: '8px',
+    margin: '8px 0',
+    width: '100%',
+    minHeight: '100px'
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <label htmlFor={name}>{label}</label>
+      <textarea
+        id={name}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        style={textareaStyle}
+      />
+    </div>
+  );
+};
+
+export default TextArea;
+

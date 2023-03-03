@@ -3,13 +3,15 @@ import ProfilePic from '../../images/alphabet/c.png';
 import { pics } from './pics';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from '../../utils/queries';
+import { FaCog } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
   const { loading, data } = useQuery(GET_ME);
 
   const userData = data?.me || [];
 
-  console.log(userData)
+  console.log(userData);
 
   return (
     <div className="profile-page">
@@ -23,9 +25,14 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="text-align">
-          <h1>{userData.firstName} {userData.lastName}</h1>
+          <h1>
+            {userData.firstName} {userData.lastName}
+          </h1>
           <p>Software Engineer</p>
         </div>
+        <Link className="settings-button" to="/settings">
+          <FaCog />
+        </Link>
       </div>
       <div className="profile-right section">
         <div className="about-me text-align">

@@ -7,9 +7,10 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id }).populate(
-          'ownedGroups'
-        );
+        return await User.findOne({ _id: context.user._id }).populate([
+          { path: 'ownedGroups' },
+          { path: 'invites.group', select: 'groupName' },
+        ]);
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
@@ -55,8 +56,8 @@ const resolvers = {
       return { token, user };
     },
 
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
       if (!user) {
         throw new AuthenticationError(errorMessage.incorrectEmail);
@@ -92,6 +93,15 @@ const resolvers = {
       }
 
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+
+    updateUsername: async (parent, { username }, context) => {
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { username: username }
+        );
+      }
     },
   },
 };

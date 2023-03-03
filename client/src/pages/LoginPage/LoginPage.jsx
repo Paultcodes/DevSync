@@ -8,7 +8,7 @@ import { ButtonOne } from '../../components/buttons/Buttons';
 
 
 const LoginPage = () => {
-    const [loginUser, { data, error }] = useMutation(LOGIN_USER);
+    const [login, { data, error }] = useMutation(LOGIN_USER);
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -19,11 +19,11 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     try {
-        const { data } = await loginUser({
+        const { data } = await login({
             variables: { ...formData },
         });
-        console.log(data.loginUser);
-        auth.login(data.loginUser.token);
+        console.log(data.login);
+        auth.login(data.login.token);
     } catch (err) {
         console.log(err);
     }

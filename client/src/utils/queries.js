@@ -5,13 +5,20 @@ export const GET_ME = gql`
   {
     me {
       _id
+      username
       firstName
       lastName
       email
       ownedGroups {
-        _id 
+        _id
         groupName
       }
+      invites {
+        _id 
+        groupName 
+        status 
+      }
+      
     }
   }
 `;

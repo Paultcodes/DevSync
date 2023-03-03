@@ -54,7 +54,6 @@ const userSchema = new Schema(
     invites: [
       {
         group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group' },
-        timestamp: { type: Date, default: Date.now },
         status: { type: String, default: 'pending' },
       },
     ],
