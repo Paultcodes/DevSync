@@ -68,3 +68,12 @@ export const UPDATE_EMAIL = gql`
     }
   }
 `;
+
+export const ADD_TAG = gql`
+ mutation addTagsToUser($tag: String!) {
+  addTagsToUser(tag: $tag) {
+    _id 
+    username
+  }
+ }
+`

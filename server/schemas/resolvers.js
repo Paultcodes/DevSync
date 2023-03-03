@@ -103,6 +103,16 @@ const resolvers = {
         );
       }
     },
+
+    addTagsToUser: async (_, { tag }, context) => {
+      console.log(tag)
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { skills: tag } }
+        );
+      }
+    },
   },
 };
 

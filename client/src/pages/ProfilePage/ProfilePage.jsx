@@ -13,6 +13,10 @@ const ProfilePage = () => {
 
   console.log(userData);
 
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <div className="profile-page">
       <div className="profile-left section">
@@ -45,14 +49,9 @@ const ProfilePage = () => {
           </p>
         </div>
         <div className="tech-skills">
-          <p className="skill">Javascript</p>
-          <p className="skill">React</p>
-          <p className="skill">Python</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
+          {userData.skills.map((tag) => {
+            return <p className="skill">{tag}</p>;
+          })}
         </div>
       </div>
     </div>

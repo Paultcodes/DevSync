@@ -89,6 +89,7 @@ const typeDefs = gql`
     login(username: String!, password: String!): Auth 
     createGroup(groupName: String!, type: String!): User
     updateUsername(username: String!): User 
+    addTagsToUser(tag: String!): User
   }
 `;
 
