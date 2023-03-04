@@ -1,25 +1,33 @@
 import './profilepage.css';
-import ProfilePic from '../../images/alphabet/c.png';
 import { pics } from './pics';
 import { useQuery } from '@apollo/client';
 import { GET_PROFILE } from '../../utils/queries';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const UserProfile = () => {
   const { userId } = useParams();
-  console.log(userId)
+  const [picSource, setPicSource] = useState('')
   const { loading, data } = useQuery(GET_PROFILE, {
     variables: { userId: userId },
   });
-
+  
   const profileData = data?.getProfile || {};
-
+  
+  console.log(userId)
   console.log(profileData)
+
+  useEffect(() => {
+    if(userData){
+        setPicSource(pics[profileData.firstName?.charAt(0).toLowerCase()])
+    }
+  },[profileData]);
 
   return (
     <div className="profile-page">
       <div className="profile-left section">
-        <div className="profile-picture"></div>
+        <div className="profile-picture">
+          <img src={picSource}></img>
         <div className="info-section">
           <h3>Profile</h3>
           <div>
@@ -56,6 +64,7 @@ const UserProfile = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
