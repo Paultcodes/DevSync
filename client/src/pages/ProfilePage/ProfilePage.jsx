@@ -1,5 +1,4 @@
 import './profilepage.css';
-import ProfilePic from '../../images/alphabet/c.png';
 import { pics } from './pics';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from '../../utils/queries';
