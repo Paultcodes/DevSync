@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ButtonOne } from '../../components/buttons/Buttons';
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { SEARCH_GROUP_NAME } from '../../utils/queries';
+import GroupCard from '../../components/GroupCard/GroupCard';
 
 const SearchGroupsPage = () => {
   const [searchType, setSearchType] = useState(null);
@@ -66,8 +67,8 @@ const SearchGroupsPage = () => {
         )}
       </div>
       <div>
-      {searched && !group && <p>No group found.</p>}
-      {group && <h1>{group.groupName}</h1>}
+        {searched && !group && <p>No group found.</p>}
+        {group && <GroupCard groupId={group._id} groupName={group.groupName} />}
       </div>
     </div>
   );

@@ -7,14 +7,18 @@ import { useParams } from 'react-router-dom';
 
 const UserProfile = () => {
   const { userId } = useParams();
-  console.log(userId)
+  console.log(userId);
   const { loading, data } = useQuery(GET_PROFILE, {
     variables: { userId: userId },
   });
 
   const profileData = data?.getProfile || {};
 
-  console.log(profileData)
+  console.log(profileData);
+
+  if (loading) {
+    return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
+  }
 
   return (
     <div className="profile-page">
@@ -23,14 +27,12 @@ const UserProfile = () => {
         <div className="info-section">
           <h3>Profile</h3>
           <div>
-            <p></p>
+            <p>{profileData.email}</p>
             <p>GitHub</p>
           </div>
         </div>
         <div className="text-align">
-          <h1>
-            
-          </h1>
+          <h1>{profileData.username}</h1>
           <p>Software Engineer</p>
         </div>
       </div>
@@ -44,16 +46,13 @@ const UserProfile = () => {
             accusantium voluptatem ad alias unde?
           </p>
         </div>
-        <div className="tech-skills">
-          <p className="skill">Javascript</p>
-          <p className="skill">React</p>
-          <p className="skill">Python</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-        </div>
+        {profileData.skills.length > 0 ? (
+          profileData.skills.map((data) => {
+            return <p className="skill">{data}</p>;
+          })
+        ) : (
+          <p>This user has not technical skills listed</p>
+        )}
       </div>
     </div>
   );

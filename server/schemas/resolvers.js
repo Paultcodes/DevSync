@@ -28,7 +28,8 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getSingleGroup: async (parent, { groupId }) => {
+    getGroup: async (parent, { groupId }) => {
+      console.log(groupId)
       return await Group.findOne({ _id: groupId });
     },
 
@@ -74,7 +75,7 @@ const resolvers = {
       const user = await User.findOne({ username });
 
       if (!user) {
-        throw new AuthenticationError(errorMessage.incorrectEmail);
+        throw new AuthenticationError(errorMessage.incorrectUsername);
       }
 
       const correctPw = await user.isCorrectPassword(password);

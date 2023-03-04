@@ -39,6 +39,8 @@ export const GET_PROFILE = gql`
     getProfile(userId: $userId) {
       _id
       username
+      email
+      skills 
     }
   }
 `;
@@ -60,3 +62,17 @@ export const SEARCH_USER = gql`
     }
   }
 `;
+
+export const GET_GROUP = gql`
+query getGroup($groupId: ID!) {
+  getGroup(groupId: $groupId) {
+    _id 
+    groupName
+    type
+     
+
+    
+  }
+}
+
+`

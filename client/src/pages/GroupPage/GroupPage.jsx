@@ -6,31 +6,46 @@ import GroupChat from '../../components/GroupChat/GroupChat';
 import TaskPage from '../../components/TaskManager/TaskPage';
 import MemberSection from '../../components/MemberSection/MemberSection';
 import GroupSettings from '../../components/GroupSettings/GroupSettings';
-import { useState } from 'react';
+import { createContext, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { GET_GROUP } from '../../utils/queries';
+
+export const GroupDataContext = createContext();
 
 const GroupPage = () => {
   const [currentSection, setCurrentSection] = useState('chat');
+  const { groupId } = useParams();
+
+  const { loading, data } = useQuery(GET_GROUP, {
+    variables: { groupId: groupId },
+  });
+
+  const groupData = data?.getGroup || {};
+
+  console.log(groupData);
   return (
-    <div className="main-group-div">
-      <div className="top-homepage">
-        <Navbar
-          currentSection={currentSection}
-          setCurrentSection={setCurrentSection}
-        />
+    <GroupDataContext.Provider value={groupData}>
+      <div className="main-group-div">
+        <div className="top-homepage">
+          <Navbar
+            currentSection={currentSection}
+            setCurrentSection={setCurrentSection}
+          />
+        </div>
+        <div className="content-section">
+          {currentSection === 'chat' ? (
+            <GroupChat />
+          ) : currentSection === 'tasks' ? (
+            <TaskPage />
+          ) : currentSection === 'members' ? (
+            <MemberSection />
+          ) : (
+            <GroupSettings />
+          )}
+        </div>
       </div>
-      <div className="content-section">
-        {currentSection === 'chat' ? (
-          <GroupChat/>
-        ): currentSection === 'tasks' ? (
-          <TaskPage/>
-        ) : currentSection === 'members' ?(
-          <MemberSection/>
-        ) : (
-          <GroupSettings/>
-        )}
-        
-      </div>
-    </div>
+    </GroupDataContext.Provider>
   );
 };
 

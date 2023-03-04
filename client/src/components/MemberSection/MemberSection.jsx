@@ -62,7 +62,7 @@ const MemberSection = () => {
       <div className="result-section">
         {searched && !user && <p>No user found</p>}
         {user && (
-          <div className='result-card'>
+          <div className="result-card">
             <Link className="profile-icon" to={`/profile/${user._id}`}>
               <FaUser />
             </Link>
