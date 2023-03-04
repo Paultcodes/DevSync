@@ -84,6 +84,7 @@ const typeDefs = gql`
     getSingleGroup: Group 
     getAllUsers: [User]!
     searchGroupName(groupName: String!): Group
+    searchUser(username: String!): User 
   }
 
   type Mutation {

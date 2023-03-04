@@ -38,7 +38,14 @@ const resolvers = {
 
     searchGroupName: async (parent, { groupName }, context) => {
       if (context.user) {
-        return await Group.findOne({ groupName: groupName, type: 'open'  });
+        return await Group.findOne({ groupName: groupName, type: 'open' });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+
+    searchUser: async (parent, { username }, context) => {
+      if (context.user) {
+        return await User.findOne({ username: username });
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },

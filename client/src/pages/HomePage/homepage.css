@@ -8,21 +8,17 @@
   background-size: cover;
   z-index: -1;
   margin-top: 5px;
-  
-  
 }
 
 .home::after {
   content: '';
   position: absolute;
   z-index: -1;
-  background-color: pink;
   inset: 0;
   opacity: 60%;
   border-radius: 10px;
   background-image: url('../../images/backgroundImages/Fotor_AI\ \(5\).png');
 }
-
 
 .top-front-page {
   margin-top: 5%;
