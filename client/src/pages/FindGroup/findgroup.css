@@ -1,9 +1,13 @@
+body{
+    background-image: url('../../images/backgroundImages/Fotor_AI\ \(5\).png');;
+}
 .group-buttons {
     display: flex;
     flex-direction: column;
     padding: 8px 12px;
     font-size: 14px;
     margin-bottom: 10px;
+    
 
 
   }
@@ -12,15 +16,18 @@
     margin-bottom: 10px;
 font-size: 14px;
 padding: 8px 12px;
+
   }
   
 .group-buttons-form {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    margin: auto;
+    
 
   }
-  .javascript {
-    border-width: 2px;
+  .find-group{
+    text-align: center;
   }
   
