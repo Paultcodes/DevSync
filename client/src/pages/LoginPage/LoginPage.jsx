@@ -1,4 +1,4 @@
-import  './loginpage.css';
+import './loginpage.css';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
@@ -6,56 +6,56 @@ import auth from '../../utils/auth';
 import { InputTwo } from '../../components/inputs/Inputs';
 import { ButtonOne } from '../../components/buttons/Buttons';
 
-
 const LoginPage = () => {
-    const [loginUser, { data, error }] = useMutation(LOGIN_USER);
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-    });
+  const [login, { data, error }] = useMutation(LOGIN_USER);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
 
-
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     try {
-        const { data } = await loginUser({
-            variables: { ...formData },
-        });
-        console.log(data.loginUser);
-        auth.login(data.loginUser.token);
+      const { data } = await login({
+        variables: { ...formData },
+      });
+      console.log(data.login);
+      auth.login(data.login.token);
     } catch (err) {
-        console.log(err);
+      console.log(err.message);
+      setErrorMessage(err.message);
     }
-};
-const handleChange = (e) => {
+  };
+  const handleChange = (e) => {
     setFormData((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value,
+      ...prevState,
+      [e.target.name]: e.target.value,
     }));
     console.log(formData);
-};
-return (
+  };
+  return (
     <div className="login">
-     <div className="login-form">
-         <h1>Login!</h1>
+      <div className="login-form">
+        <h1>Login!</h1>
         <div className="login-inputs">
-            <InputTwo
-                onChange={handleChange}
-                name="username"
-                placeholder="Username"
-            />
-        
-        
-            <InputTwo
-                onChange={handleChange} 
-                name="password"
-                placeholder="Password"
-            />
-            <ButtonOne onClick={handleSubmit} buttonName="Login" />
+          <InputTwo
+            onChange={handleChange}
+            name="username"
+            placeholder="Username"
+          />
+
+          <InputTwo
+            onChange={handleChange}
+            name="password"
+            placeholder="Password"
+          />
+          <div style={{textAlign: 'center'}}>{errorMessage}</div>
+          <ButtonOne onClick={handleSubmit} buttonName="Login" />
         </div>
- </div>
+      </div>
     </div>
-);
+  );
 };
 export default LoginPage;

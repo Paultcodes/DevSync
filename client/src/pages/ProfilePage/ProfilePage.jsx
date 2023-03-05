@@ -3,6 +3,8 @@ import { pics } from './pics';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from '../../utils/queries';
 import { useEffect, useState } from 'react';
+import { FaCog } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
 const ProfilePage = () => {
@@ -32,6 +34,12 @@ const ProfilePage = () => {
 
   // const picSource = pics.a
 
+  console.log(userData);
+
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <div className="profile-page">
       <div className="profile-left section">
@@ -46,9 +54,14 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="text-align">
-          <h1>{userData.firstName} {userData.lastName}</h1>
+          <h1>
+            {userData.firstName} {userData.lastName}
+          </h1>
           <p>Software Engineer</p>
         </div>
+        <Link className="settings-button" to="/settings">
+          <FaCog />
+        </Link>
       </div>
       <div className="profile-right section">
         <div className="about-me text-align">
@@ -61,14 +74,9 @@ const ProfilePage = () => {
           </p>
         </div>
         <div className="tech-skills">
-          <p className="skill">Javascript</p>
-          <p className="skill">React</p>
-          <p className="skill">Python</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
-          <p className="skill">CSS</p>
+          {userData.skills.map((tag) => {
+            return <p className="skill">{tag}</p>;
+          })}
         </div>
       </div>
     </div>

@@ -7,9 +7,10 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id }).populate(
-          'ownedGroups'
-        );
+        return await User.findOne({ _id: context.user._id }).populate([
+          { path: 'ownedGroups' },
+          { path: 'invites.group', select: 'groupName' },
+        ]);
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
@@ -27,12 +28,27 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getSingleGroup: async (parent, { groupId }) => {
+    getGroup: async (parent, { groupId }) => {
+      console.log(groupId)
       return await Group.findOne({ _id: groupId });
     },
 
     getAllUsers: async () => {
       return await User.find({});
+    },
+
+    searchGroupName: async (parent, { groupName }, context) => {
+      if (context.user) {
+        return await Group.findOne({ groupName: groupName, type: 'open' });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+
+    searchUser: async (parent, { username }, context) => {
+      if (context.user) {
+        return await User.findOne({ username: username });
+      }
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
   },
 
@@ -55,11 +71,11 @@ const resolvers = {
       return { token, user };
     },
 
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
       if (!user) {
-        throw new AuthenticationError(errorMessage.incorrectEmail);
+        throw new AuthenticationError(errorMessage.incorrectUsername);
       }
 
       const correctPw = await user.isCorrectPassword(password);
@@ -92,6 +108,25 @@ const resolvers = {
       }
 
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+    },
+
+    updateUsername: async (parent, { username }, context) => {
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { username: username }
+        );
+      }
+    },
+
+    addTagsToUser: async (_, { tag }, context) => {
+      console.log(tag);
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { skills: tag } }
+        );
+      }
     },
   },
 };

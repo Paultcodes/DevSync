@@ -1,11 +1,14 @@
 import './navbar.css';
 import { FaRocketchat, FaTasks, FaUsers, FaCog } from 'react-icons/fa';
 import { navColors, navTypes } from './style';
+import { useContext } from 'react';
+import {GroupDataContext} from '../../pages/GroupPage/GroupPage'
 
 const Navbar = ({ currentSection, setCurrentSection }) => {
+  const groupData = useContext(GroupDataContext);
   return (
     <div className="group-navbar">
-      <h1>Top Coders Channel</h1>
+      <h1>{groupData.groupName} Channel</h1>
       <ul className="navbar-links">
         <li
           style={{

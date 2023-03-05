@@ -18,6 +18,7 @@ export const ButtonOne = (props) => {
       onClick={props.onClick}
     >
       {props.buttonName}
+      {props.children}
     </button>
   );
 };
@@ -51,6 +52,7 @@ export const ButtonTwo = (props) => {
 export const ButtonThree = (props) => {
   return (
     <button
+    name={props.name}
       style={{
         backgroundColor: '#D63447',
         border: 'none',
@@ -76,10 +78,10 @@ export const ButtonFour = (props) => {
   return (
     <button
       style={{
-        backgroundColor: '#2D2D2D',
+        backgroundColor: '#00008B',
         border: 'none',
         color: '#fff',
-        padding: '12px 24px',
+        padding: '9px 15px',
         textAlign: 'center',
         textDecoration: 'none',
         display: 'inline-block',

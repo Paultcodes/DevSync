@@ -18,9 +18,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <a href="/" className="navbar-logo">
+        <Link to="/" className="navbar-logo">
           DevSync
-        </a>
+        </Link>
         <button className="navbar-toggle" onClick={toggleMenu}>
           {menuOpen ? '✕' : '☰'}
         </button>
@@ -51,14 +51,14 @@ const Navbar = () => {
         ) : (
           <div style={{ textAlign: 'center' }}>
             <li className="navbar-item">
-              <a onClick={auth.logout} href="/login" className="navbar-link">
+              <Link to="/login" className="navbar-link">
                 Login
-              </a>
+              </Link>
             </li>
             <li className="navbar-item">
-              <a onClick={auth.logout} href="/signup" className="navbar-link">
+              <Link to="/signup" className="navbar-link">
                 Sign up
-              </a>
+              </Link>
             </li>
           </div>
         )}

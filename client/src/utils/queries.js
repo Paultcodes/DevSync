@@ -5,35 +5,74 @@ export const GET_ME = gql`
   {
     me {
       _id
+      username
       firstName
       lastName
       email
       ownedGroups {
-        _id 
+        _id
         groupName
       }
+      invites {
+        _id
+        groupName
+        status
+      }
+      skills
     }
   }
 `;
 
 export const ALL_USERS = gql`
- query getAllUsers {
-  getAllUsers {
-    _id 
-    username
-    firstName 
-    lastName
+  query getAllUsers {
+    getAllUsers {
+      _id
+      username
+      firstName
+      lastName
+    }
   }
- }                  
 `;
-
 
 export const GET_PROFILE = gql`
- query getProfile($userId: ID!) {
-  getProfile(userId: $userId) {
-    _id 
-    username 
+  query getProfile($userId: ID!) {
+    getProfile(userId: $userId) {
+      _id
+      username
+      email
+      skills 
+    }
   }
- }                
 `;
 
+export const SEARCH_GROUP_NAME = gql`
+  query searchGroupName($groupName: String!) {
+    searchGroupName(groupName: $groupName) {
+      _id
+      groupName
+    }
+  }
+`;
+
+export const SEARCH_USER = gql`
+  query searchUser($username: String!) {
+    searchUser(username: $username) {
+      _id
+      username
+    }
+  }
+`;
+
+export const GET_GROUP = gql`
+query getGroup($groupId: ID!) {
+  getGroup(groupId: $groupId) {
+    _id 
+    groupName
+    type
+     
+
+    
+  }
+}
+
+`

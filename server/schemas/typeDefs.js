@@ -15,7 +15,7 @@ const typeDefs = gql`
     title: String
     aboutMe: String
     skills: [String]!
-    invites: [Invite]!
+    invites: [ReceivedInvite]!
     ownedGroups: [testGroup]!
     groupsAsMember: [userGroups]!
   }
@@ -42,8 +42,15 @@ const typeDefs = gql`
     from: String 
   }
 
+  type ReceivedInvite {
+    _id: ID 
+    groupName: String 
+    status: String 
+
+  }
+
   type Invite {
-    date: String 
+    group: String 
     user: User 
     status: String
   }
@@ -55,6 +62,7 @@ const typeDefs = gql`
   }
 
   type Group {
+    _id: ID 
     groupName: String 
     type: String 
     owner: String 
@@ -75,12 +83,17 @@ const typeDefs = gql`
     getAllOpenGroups: Group 
     getSingleGroup: Group 
     getAllUsers: [User]!
+    searchGroupName(groupName: String!): Group
+    searchUser(username: String!): User 
+    getGroup(groupId: ID!): Group 
   }
 
   type Mutation {
     createUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth 
-    login(email: String!, password: String!): Auth 
+    login(username: String!, password: String!): Auth 
     createGroup(groupName: String!, type: String!): User
+    updateUsername(username: String!): User 
+    addTagsToUser(tag: String!): User
   }
 `;
 
