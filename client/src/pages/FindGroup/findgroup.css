@@ -1,0 +1,26 @@
+.group-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-bottom: 10px;
+
+
+  }
+  
+  .group-buttons > * {
+    margin-bottom: 10px;
+font-size: 14px;
+padding: 8px 12px;
+  }
+  
+.group-buttons-form {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+  }
+  .javascript {
+    border-width: 2px;
+  }
+  
