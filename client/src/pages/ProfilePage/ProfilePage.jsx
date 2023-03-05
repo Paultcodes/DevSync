@@ -1,15 +1,38 @@
 import './profilepage.css';
-import ProfilePic from '../../images/alphabet/c.png';
 import { pics } from './pics';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from '../../utils/queries';
+import { useEffect, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+
 const ProfilePage = () => {
   const { loading, data } = useQuery(GET_ME);
+  const [picSource, setPicSource] = useState('')
 
-  const userData = data?.me || [];
+  const userData = data?.me || {};
+
+  useEffect(() => {
+    if(userData){
+        setPicSource(pics[userData.firstName?.charAt(0).toLowerCase()])
+    }
+  },[userData])
+
+  // if(userData){
+  //   console.log(userData.firstName?.charAt(0).toLowerCase())
+  // }  else {
+  //   console.log('no data')
+  // }
+
+// console.log(userData)
+
+
+
+  // const letter = userData.firstName.charAt(0).toLowerCase()
+  // console.log(letter)
+
+  // const picSource = pics.a
 
   console.log(userData);
 
@@ -20,7 +43,9 @@ const ProfilePage = () => {
   return (
     <div className="profile-page">
       <div className="profile-left section">
-        <div className="profile-picture"></div>
+        <div className="profile-picture">
+           <img src={picSource}></img>
+        </div>
         <div className="info-section">
           <h3>Profile</h3>
           <div>

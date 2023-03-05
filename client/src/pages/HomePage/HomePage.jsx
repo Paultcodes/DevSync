@@ -46,7 +46,7 @@ const HomePage = () => {
 
       <div className="bottom-section">
         {cardContent.map(({ title, text }) => {
-          return <HomeCard title={title} text={text} />;
+          return <HomeCard key={title} title={title} text={text} />;
         })}
       </div>
     </div>

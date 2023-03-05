@@ -34,7 +34,7 @@ const Navbar = () => {
         {auth.loggedIn() &&
           loggedInContent.map(({ route, name }) => {
             return (
-              <li className="navbar-item">
+              <li key={name} className="navbar-item">
                 <Link className="navbar-link" to={route}>
                   {name}
                 </Link>
