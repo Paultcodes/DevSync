@@ -55,9 +55,9 @@ function App() {
             <Route path='/signup' element={<SignupPage/>}/>
             <Route path='/creategroup' element={<CreateGroupPage/>}/>
             <Route path='/test' element={<MyGroupsPage/>}/>
+            <Route path='/profile/:userId' element={<UserProfile/>}/>
             <Route path='/profile' element={<ProfilePage/>}/>
             <Route path='/testtwo' element={<Test/>}/>
-            <Route path='/profile/:userId' element={<UserProfile/>}/>
           </Routes>
         </Router>
       </div>
