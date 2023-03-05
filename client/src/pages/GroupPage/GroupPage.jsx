@@ -23,6 +23,10 @@ const GroupPage = () => {
 
   const groupData = data?.getGroup || {};
 
+  if (loading) {
+    return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
+  }
+
   console.log(groupData);
   return (
     <GroupDataContext.Provider value={groupData}>
