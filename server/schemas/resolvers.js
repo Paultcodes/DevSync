@@ -128,6 +128,12 @@ const resolvers = {
         );
       }
     },
+
+    createHelpWanted: async(parent, {groupId, title, description}, context) => {
+      if (context.user) {
+        return await HelpWanted.create({group: groupId, title, description})
+      }
+    }
   },
 };
 

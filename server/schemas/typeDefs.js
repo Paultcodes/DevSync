@@ -55,6 +55,13 @@ const typeDefs = gql`
     status: String
   }
 
+  type HelpWanted {
+    _id: ID 
+    group: Group 
+    title: String 
+    description: String 
+  }
+
   
 
   type Member {
@@ -94,6 +101,7 @@ const typeDefs = gql`
     createGroup(groupName: String!, type: String!): User
     updateUsername(username: String!): User 
     addTagsToUser(tag: String!): User
+    createHelpWanted(groupId: ID!, title: String!, description: String!): HelpWanted
   }
 `;
 
