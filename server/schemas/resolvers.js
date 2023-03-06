@@ -28,9 +28,19 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getGroup: async (parent, { groupId }) => {
-      console.log(groupId)
-      return await Group.findOne({ _id: groupId });
+
+    getGroup: async (parent, { groupId }, context) => {
+      const getGroup = await Group.findOne({ _id: groupId });
+
+      if (!getGroup) {
+        throw new Error('Group now found');
+      }
+
+      const isMember = getGroup.members.some((member) =>
+        member._id.equals(context.user._id)
+      );
+
+      return { ...getGroup.toObject(), isMember };
     },
 
     getAllUsers: async () => {
@@ -129,11 +139,15 @@ const resolvers = {
       }
     },
 
-    createHelpWanted: async(parent, {groupId, title, description}, context) => {
+    createHelpWanted: async (
+      parent,
+      { groupId, title, description },
+      context
+    ) => {
       if (context.user) {
-        return await HelpWanted.create({group: groupId, title, description})
+        return await HelpWanted.create({ group: groupId, title, description });
       }
-    }
+    },
   },
 };
 

@@ -77,6 +77,7 @@ function ChatBox(props) {
       <div className="messages" ref={chatBoxRef}>
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
+            <p style={{fontWeight: '900'}}>John Smith</p>
             <p className="text">{message.text}</p>
             <p className="time">{message.time}</p>
           </div>

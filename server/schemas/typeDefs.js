@@ -77,6 +77,7 @@ const typeDefs = gql`
     invites: [Invite]!
     tags: [String]!
     chatMessages: [Message]!
+    isMember: Boolean
   }
 
   type Auth {
@@ -92,7 +93,7 @@ const typeDefs = gql`
     getAllUsers: [User]!
     searchGroupName(groupName: String!): Group
     searchUser(username: String!): User 
-    getGroup(groupId: ID!): Group 
+    getGroup(groupId: ID!): Group!
   }
 
   type Mutation {
