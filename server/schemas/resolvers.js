@@ -158,6 +158,12 @@ const resolvers = {
         return await HelpWanted.create({ group: groupId, title, description });
       }
     },
+
+    inviteUserToGroup: async (_, {userId, groupId}, context) => {
+      if (context.user) {
+        //! Need 
+      }
+    }
   },
 };
 

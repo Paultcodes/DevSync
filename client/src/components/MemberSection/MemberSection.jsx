@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { InputOne, TextArea, InputTwo } from '../inputs/Inputs';
 import { Link } from 'react-router-dom';
 import { SEARCH_USER } from '../../utils/queries';
-import { CREATE_HELP_WANTED } from '../../utils/mutations';
+import { CREATE_HELP_WANTED, INVITE_USER_TO_GROUP } from '../../utils/mutations';
 import { useParams } from 'react-router-dom';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import { FaSearch, FaPencilAlt, FaUser, FaPlus } from 'react-icons/fa';
@@ -18,6 +18,9 @@ import auth from '../../utils/auth';
 
 const MemberSection = () => {
   const { groupId } = useParams();
+
+  const [inviteUserToGroup, { data: inviteUserData, error: inviteUserError }] =
+    useMutation(INVITE_USER_TO_GROUP);
 
   const [createHelpWanted, { data: createData, error: createError }] =
     useMutation(CREATE_HELP_WANTED);
@@ -35,23 +38,39 @@ const MemberSection = () => {
     console.log(helpWantedForm);
   };
 
+  const handleInvite = async (userId) => {
+    const token = auth.loggedIn() ? auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const { data } = await inviteUserToGroup({
+        variables: { groupId, userId },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(helpWantedForm)
-    console.log(groupId)
+    console.log(helpWantedForm);
+    console.log(groupId);
 
     const token = auth.loggedIn() ? auth.getToken() : null;
 
     if (!token) {
-      return false
+      return false;
     }
 
     try {
-      const {data} = await createHelpWanted({
-        variables: {...helpWantedForm, groupId}
-      })
+      const { data } = await createHelpWanted({
+        variables: { ...helpWantedForm, groupId },
+      });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -134,7 +153,12 @@ const MemberSection = () => {
             <Link className="profile-icon" to={`/profile/${user._id}`}>
               <FaUser />
             </Link>
-            <ButtonFour buttonName={<FaPlus />} />
+            <ButtonFour
+              onClick={() => {
+                handleInvite(user._id);
+              }}
+              buttonName={<FaPlus />}
+            />
             {user.username}
           </div>
         )}
