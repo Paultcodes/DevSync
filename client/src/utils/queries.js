@@ -40,7 +40,7 @@ export const GET_PROFILE = gql`
       _id
       username
       email
-      skills 
+      skills
     }
   }
 `;
@@ -63,16 +63,26 @@ export const SEARCH_USER = gql`
   }
 `;
 
+// export const GET_GROUP = gql`
+// query getGroup($groupId: ID!) {
+//   getGroup(groupId: $groupId) {
+//     _id
+//     groupName
+//     type
+
+//   }
+// }
+
+// `
+
 export const GET_GROUP = gql`
-query getGroup($groupId: ID!) {
-  getGroup(groupId: $groupId) {
-    _id 
-    groupName
-    type
-     
-
-    
+  query getGroup($groupId: ID!) {
+    getGroup(groupId: $groupId) {
+      _id
+      groupName
+      type
+      isMember
+      isGroupOwner
+    }
   }
-}
-
-`
+`;

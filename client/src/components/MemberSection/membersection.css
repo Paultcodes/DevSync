@@ -37,3 +37,11 @@
     height: 100px;
     border-radius: 10px;
 }
+
+
+.help-wanted {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

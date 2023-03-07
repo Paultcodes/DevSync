@@ -19,20 +19,6 @@ const ProfilePage = () => {
     }
   },[userData])
 
-  // if(userData){
-  //   console.log(userData.firstName?.charAt(0).toLowerCase())
-  // }  else {
-  //   console.log('no data')
-  // }
-
-// console.log(userData)
-
-
-
-  // const letter = userData.firstName.charAt(0).toLowerCase()
-  // console.log(letter)
-
-  // const picSource = pics.a
 
   console.log(userData);
 
