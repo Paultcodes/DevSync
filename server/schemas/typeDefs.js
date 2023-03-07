@@ -23,6 +23,7 @@ const typeDefs = gql`
   type testGroup {
     _id: ID 
     groupName: String  
+    members:[User]!
 
   }
 

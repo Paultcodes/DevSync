@@ -22,6 +22,7 @@ import SearchGroupsPage from './pages/SearchGroups/SearchGroupsPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import ProfileSettings from './pages/ProfileSettings/ProfileSettings';
 
+
 // Construct our main GraphQL API endpoint
 //test
 const httpLink = createHttpLink({
@@ -58,7 +59,7 @@ function App() {
             <Route path="/group" element={<GroupPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/creategroup" element={<CreateGroupPage />} />
-            <Route path="/test" element={<MyGroupsPage />} />
+            <Route path="/mygroups" element={<MyGroupsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/searchgroups" element={<SearchGroupsPage />} />
@@ -66,6 +67,7 @@ function App() {
             <Route path="/testtwo" element={<Test />} />
             <Route path="/profile/:userId" element={<UserProfile />} />
             <Route path="/group/:groupId" element={<GroupPage />} />
+            
           </Routes>
         </Router>
       </div>
