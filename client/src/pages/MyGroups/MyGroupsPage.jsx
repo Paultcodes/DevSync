@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
-
 import { GET_ME } from '../../utils/queries';
 
 const MyGroupsPage = () => {
@@ -15,16 +14,16 @@ const MyGroupsPage = () => {
   }
   return(
   <div>
+    
   
     {userData.map((data) => {
       
-      return (
-    
-      <Link to={`/group/${data.ownedGroups._id}`}></Link>)
+      return (<Link to={`/group/${data._id}`}> 
+      <h1>{data.groupName}</h1>
+      </Link>)
      })}
-    
-    
-  </div>
+
+    </div>
   )
   
   
