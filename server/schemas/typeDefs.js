@@ -105,6 +105,7 @@ const typeDefs = gql`
     createGroup(groupName: String!, type: String!): User
     updateUsername(username: String!): User 
     addTagsToUser(tag: String!): User
+    inviteUserToGroup(groupId: ID!, userId: ID!): User 
     createHelpWanted(groupId: ID!, title: String!, description: String!): HelpWanted
   }
 `;

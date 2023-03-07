@@ -116,6 +116,11 @@ const resolvers = {
         });
 
         if (newGroup) {
+          await Group.findOneAndUpdate(
+            { _id: newGroup._id },
+            { $push: { members: context.user._id } },
+            { new: true }
+          );
           const updatedUser = await User.findOneAndUpdate(
             { _id: context.user._id },
             {
@@ -163,11 +168,26 @@ const resolvers = {
       }
     },
 
-    // inviteUserToGroup: async (_, {userId, groupId}, context) => {
-    //   if (context.user) {
-    //     //! Need
-    //   }
-    // }
+    inviteUserToGroup: async (_, { userId, groupId }, context) => {
+      if (context.user) {
+        const group = await Group.findOne({ _id: groupId });
+
+        const isMember = group.members.some((member) =>
+          member._id.equals(userId)
+        );
+
+        if (isMember) {
+          throw new Error('User is already a member of this group');
+        } else {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { $push: { invites: { group: groupId } } },
+            { new: true }
+          );
+          return updatedUser;
+        }
+      }
+    },
   },
 };
 

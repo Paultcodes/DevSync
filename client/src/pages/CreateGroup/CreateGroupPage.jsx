@@ -8,10 +8,12 @@ import auth from '../../utils/auth';
 
 import { useMutation } from '@apollo/client';
 import { CREATE_GROUP } from '../../utils/mutations';
+import { Redirect } from 'react-router-dom';
 
 const CreateGroupPage = () => {
   const [createGroup, { data, error }] = useMutation(CREATE_GROUP);
   const [groupType, setGroupType] = useState('open');
+  
 
   const [groupForm, setGroupForm] = useState({
     groupName: '',
@@ -47,6 +49,9 @@ const CreateGroupPage = () => {
       const { data } = await createGroup({
         variables: { ...groupForm },
       });
+      if (data) {
+        
+      }
     } catch (err) {
       console.log(err);
     }
@@ -82,6 +87,7 @@ const CreateGroupPage = () => {
         </div>
       </div>
       <div className="create-group-input">
+        <h2>{}</h2>
         <InputTwo
           name="groupName"
           onChange={handleChange}

@@ -6,31 +6,33 @@ import { useEffect, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-
 const ProfilePage = () => {
   const { loading, data } = useQuery(GET_ME);
-  const [picSource, setPicSource] = useState('')
+  const [picSource, setPicSource] = useState('');
 
   const userData = data?.me || {};
 
   useEffect(() => {
-    if(userData){
-        setPicSource(pics[userData.firstName?.charAt(0).toLowerCase()])
+    if (userData) {
+      setPicSource(pics[userData.firstName?.charAt(0).toLowerCase()]);
     }
-  },[userData])
-
+  }, [userData]);
 
   console.log(userData);
 
   if (loading) {
-    return <h1>Loading...</h1>
+    return <h1>Loading...</h1>;
   }
 
   return (
     <div className="profile-page">
       <div className="profile-left section">
         <div className="profile-picture">
-           <img className='letter-profile' alt='User Letter' src={picSource}></img>
+          <img
+            className="letter-profile"
+            alt="User Letter"
+            src={picSource}
+          ></img>
         </div>
         <div className="info-section">
           <h3>Profile</h3>
@@ -60,9 +62,13 @@ const ProfilePage = () => {
           </p>
         </div>
         <div className="tech-skills">
-          {userData.skills.map((tag) => {
-            return <p className="skill">{tag}</p>;
-          })}
+          {userData.skills.length > 0 ? (
+            userData.skills.map((data) => {
+              return <p className="skill">{data}</p>;
+            })
+          ) : (
+            <p>You have no listed skills</p>
+          )}
         </div>
       </div>
     </div>

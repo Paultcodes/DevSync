@@ -65,7 +65,7 @@ const UserProfile = () => {
               return <p className="skill">{data}</p>;
             })
           ) : (
-            <p>This user has not technical skills listed</p>
+            <p>This user has no skills listed</p>
           )}
         </div>
       </div>
