@@ -86,6 +86,10 @@ export const GET_GROUP = gql`
       type
       isMember
       isGroupOwner
+      chatMessages {
+        messageText 
+        from 
+      }
     }
   }
 `

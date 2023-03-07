@@ -39,7 +39,6 @@ const typeDefs = gql`
 
   type Message {
     messageText: String 
-    to: String 
     from: String 
   }
 
@@ -62,6 +61,8 @@ const typeDefs = gql`
     title: String 
     description: String 
   }
+
+  
 
   
 
@@ -107,6 +108,7 @@ const typeDefs = gql`
     addTagsToUser(tag: String!): User
     inviteUserToGroup(groupId: ID!, userId: ID!): User 
     createHelpWanted(groupId: ID!, title: String!, description: String!): HelpWanted
+    createMessage(messageText: String!, groupId: ID!): Group 
   }
 `;
 

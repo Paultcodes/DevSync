@@ -29,6 +29,7 @@ const groupSchema = new Schema(
         from: {
           type: String,
         },
+        timestamp: { type: Date, default: Date.now },
       },
     ],
 

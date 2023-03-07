@@ -188,6 +188,24 @@ const resolvers = {
         }
       }
     },
+
+    createMessage: async (parent, { messageText, groupId }, context) => {
+      if (context.user) {
+        const updatedGroup = await Group.findOneAndUpdate(
+          { _id: groupId },
+          {
+            $push: {
+              chatMessages: {
+                messageText: messageText,
+                from: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
+        return updatedGroup;
+      }
+    },
   },
 };
 

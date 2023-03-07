@@ -94,3 +94,14 @@ mutation createHelpWanted($groupId: ID!, $title: String!, $description: String!)
 }
 
 `
+
+export const SEND_MESSAGE = gql`
+mutation createMessage($messageText: String!, $groupId: ID!) {
+  createMessage(messageText: $messageText, groupId: $groupId) {
+    chatMessages {
+      messageText 
+      from 
+    }
+  }
+}
+`
