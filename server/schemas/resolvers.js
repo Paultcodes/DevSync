@@ -32,7 +32,7 @@ const resolvers = {
       const getGroup = await Group.findOne({ _id: groupId });
 
       if (!getGroup) {
-       throw new Error('Group not found');
+        throw new Error('Group not found');
       }
 
       const user = await User.findOne({ _id: context.user._id });
@@ -53,7 +53,7 @@ const resolvers = {
     },
 
     getHelpWantedAds: async () => {
-      return await HelpWanted.find({}).populate("group");;
+      return await HelpWanted.find({}).populate('group');
     },
 
     searchGroupName: async (parent, { groupName }, context) => {
@@ -163,11 +163,11 @@ const resolvers = {
       }
     },
 
-    inviteUserToGroup: async (_, {userId, groupId}, context) => {
-      if (context.user) {
-        //! Need 
-      }
-    }
+    // inviteUserToGroup: async (_, {userId, groupId}, context) => {
+    //   if (context.user) {
+    //     //! Need
+    //   }
+    // }
   },
 };
 

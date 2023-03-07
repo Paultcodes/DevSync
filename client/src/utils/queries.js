@@ -41,6 +41,8 @@ export const GET_PROFILE = gql`
       _id
       username
       email
+      firstName 
+      lastName
       skills
     }
   }

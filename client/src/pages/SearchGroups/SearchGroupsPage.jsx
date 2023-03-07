@@ -71,7 +71,7 @@ const SearchGroupsPage = () => {
         <ButtonThree
           name="helpWanted"
           onClick={searchForHelpWanted}
-          buttonName="Search by Help Wanted"
+          buttonName="View Help Wanted Ads"
         />
       </div>
       <div className="search-section">

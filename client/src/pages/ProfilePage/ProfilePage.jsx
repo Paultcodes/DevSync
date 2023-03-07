@@ -30,7 +30,7 @@ const ProfilePage = () => {
     <div className="profile-page">
       <div className="profile-left section">
         <div className="profile-picture">
-           <img src={picSource}></img>
+           <img className='letter-profile' alt='User Letter' src={picSource}></img>
         </div>
         <div className="info-section">
           <h3>Profile</h3>
