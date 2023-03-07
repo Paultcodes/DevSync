@@ -21,7 +21,7 @@ import UserProfile from './pages/ProfilePage/UserProfile';
 import SearchGroupsPage from './pages/SearchGroups/SearchGroupsPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import ProfileSettings from './pages/ProfileSettings/ProfileSettings';
-import FindGroup from './pages/FindGroup/FindGroup';
+
 
 // Construct our main GraphQL API endpoint
 //test
@@ -59,7 +59,7 @@ function App() {
             <Route path="/group" element={<GroupPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/creategroup" element={<CreateGroupPage />} />
-            <Route path="/test" element={<MyGroupsPage />} />
+            <Route path="/mygroups" element={<MyGroupsPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/searchgroups" element={<SearchGroupsPage />} />
@@ -67,7 +67,7 @@ function App() {
             <Route path="/testtwo" element={<Test />} />
             <Route path="/profile/:userId" element={<UserProfile />} />
             <Route path="/group/:groupId" element={<GroupPage />} />
-            <Route path="/findgroup" element={<FindGroup/>} />
+            
           </Routes>
         </Router>
       </div>
