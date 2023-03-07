@@ -40,6 +40,8 @@ const SearchGroupsPage = () => {
   const group = data?.searchGroupName;
 
   const ads = adData?.getHelpWantedAds;
+
+  
   console.log(ads);
 
   console.log(group);
