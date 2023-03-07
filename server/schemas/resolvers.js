@@ -28,19 +28,24 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-
     getGroup: async (parent, { groupId }, context) => {
       const getGroup = await Group.findOne({ _id: groupId });
 
       if (!getGroup) {
-        throw new Error('Group now found');
+       throw new Error('Group not found');
       }
 
-      const isMember = getGroup.members.some((member) =>
-        member._id.equals(context.user._id)
+      const user = await User.findOne({ _id: context.user._id });
+
+      const isGroupOwner = user.ownedGroups.some((group) =>
+        group._id.equals(groupId)
       );
 
-      return { ...getGroup.toObject(), isMember };
+      const isMember = user.groupsAsMember.some((group) =>
+        group._id.equals(groupId)
+      );
+
+      return { ...getGroup.toObject(), isMember, isGroupOwner };
     },
 
     getAllUsers: async () => {
@@ -109,7 +114,12 @@ const resolvers = {
         if (newGroup) {
           const updatedUser = await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $addToSet: { ownedGroups: newGroup._id } },
+            {
+              $push: {
+                ownedGroups: newGroup._id,
+                groupsAsMember: newGroup._id,
+              },
+            },
             { new: true }
           );
 

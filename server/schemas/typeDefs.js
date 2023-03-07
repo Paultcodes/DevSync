@@ -78,6 +78,7 @@ const typeDefs = gql`
     tags: [String]!
     chatMessages: [Message]!
     isMember: Boolean
+    isGroupOwner: Boolean 
   }
 
   type Auth {

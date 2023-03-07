@@ -23,7 +23,7 @@ const GroupPage = () => {
   });
 
   const groupData = data?.getGroup || {};
-  console.log(error)
+  console.log(error);
 
   if (loading) {
     return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
@@ -32,10 +32,12 @@ const GroupPage = () => {
   console.log(groupData);
 
   if (!groupData.isMember) {
-    return <div>
-      <h1>Would You like to join this group? </h1>
-      <ButtonOne buttonName='Join'/>
-    </div>
+    return (
+      <div>
+        <h1>Would You like to join this group? </h1>
+        <ButtonOne buttonName="Join" />
+      </div>
+    );
   }
   return (
     <GroupDataContext.Provider value={groupData}>

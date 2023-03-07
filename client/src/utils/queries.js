@@ -82,6 +82,7 @@ export const GET_GROUP = gql`
       groupName
       type
       isMember
+      isGroupOwner
     }
   }
 `;

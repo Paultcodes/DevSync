@@ -26,12 +26,7 @@ import PicY from '../../images/alphabet/y.png';
 import PicZ from '../../images/alphabet/z.png';
 
 
-// const moduleName = 'myModule';
-// import(`./${moduleName}`).then(module => {
-//   // use the imported module here
-// }).catch(error => {
-//   // handle errors here
-// });
+
 
 export const pics = {
   a: PicA,
@@ -62,6 +57,12 @@ export const pics = {
   z: PicZ,
 };
 
-export function choosePic(char){
-  
-}
+
+
+
+
+
+
+
+
+
