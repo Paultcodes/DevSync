@@ -4,7 +4,7 @@ import { InputOne } from '../../components/inputs/Inputs';
 import { useState } from 'react';
 import { ButtonOne } from '../../components/buttons/Buttons';
 import { useQuery, useLazyQuery } from '@apollo/client';
-import { SEARCH_GROUP_NAME } from '../../utils/queries';
+import { SEARCH_GROUP_NAME, GET_HELP_WANTED_ADS } from '../../utils/queries';
 import GroupCard from '../../components/GroupCard/GroupCard';
 
 const SearchGroupsPage = () => {
@@ -17,6 +17,9 @@ const SearchGroupsPage = () => {
   const [getGroupByName, { loading, error, data }] =
     useLazyQuery(SEARCH_GROUP_NAME);
 
+  const [getHelpWantedAds, { loading: adLoading, error: adError, data: adData }] =
+    useLazyQuery(GET_HELP_WANTED_ADS);
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -28,12 +31,24 @@ const SearchGroupsPage = () => {
     }
   };
 
+  const searchForHelpWanted = () => {
+    
+      getHelpWantedAds();
+      setSearchType('helpWanted');
+  };
+
   const group = data?.searchGroupName;
+
+  const ads = adData?.getHelpWantedAds;
+
+  
+  console.log(ads);
 
   console.log(group);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
+  if(adLoading) return <p>Loading help wanted ads...</p>;
 
   const handleClick = (e) => {
     setSearchType(e.target.name);
@@ -53,6 +68,11 @@ const SearchGroupsPage = () => {
           onClick={handleClick}
           buttonName="Search by tags"
         />
+        <ButtonThree
+          name="helpWanted"
+          onClick={searchForHelpWanted}
+          buttonName="Search by Help Wanted"
+        />
       </div>
       <div className="search-section">
         {searchType === 'groupName' ? (
@@ -61,7 +81,21 @@ const SearchGroupsPage = () => {
             <ButtonOne buttonName="Search" onClick={searchForGroup} />
           </div>
         ) : searchType === 'tags' ? (
-          <div className="tag-search"></div>
+          <div className="tag-search">
+            <InputOne placeholder='Tag' value={searchTerm} onChange={handleSearch} />
+            <ButtonOne buttonName="Search" onClick={searchForGroup} />
+          </div>
+        ) : searchType === 'helpWanted' ? (
+          <div className="help-wanted-search">
+           { ads.map((ad) => (
+             <div key={ad._id}>
+              <h3>{ad.title}</h3>
+              <p>contact {ad.group.groupName} to join</p>
+              <p>{ad.description}</p>
+            </div>
+           ))}
+           
+          </div>
         ) : (
           <h3>Start searching for a group to work with</h3>
         )}

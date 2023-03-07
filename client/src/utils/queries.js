@@ -85,4 +85,19 @@ export const GET_GROUP = gql`
       isGroupOwner
     }
   }
-`;
+`
+
+export const GET_HELP_WANTED_ADS = gql`
+  query getHelpWantedAds {
+          getHelpWantedAds{
+            group{
+              _id
+              groupName
+            }
+            _id
+            title
+            description
+          }
+        }
+`
+;

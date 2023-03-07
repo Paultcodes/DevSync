@@ -52,6 +52,10 @@ const resolvers = {
       return await User.find({});
     },
 
+    getHelpWantedAds: async () => {
+      return await HelpWanted.find({}).populate("group");;
+    },
+
     searchGroupName: async (parent, { groupName }, context) => {
       if (context.user) {
         return await Group.findOne({ groupName: groupName, type: 'open' });
