@@ -95,6 +95,7 @@ const typeDefs = gql`
     searchGroupName(groupName: String!): Group
     searchUser(username: String!): User 
     getGroup(groupId: ID!): Group!
+    getHelpWantedAds: [HelpWanted]
   }
 
   type Mutation {
