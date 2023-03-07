@@ -28,9 +28,24 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getGroup: async (parent, { groupId }) => {
-      console.log(groupId)
-      return await Group.findOne({ _id: groupId });
+    getGroup: async (parent, { groupId }, context) => {
+      const getGroup = await Group.findOne({ _id: groupId });
+
+      if (!getGroup) {
+       throw new Error('Group not found');
+      }
+
+      const user = await User.findOne({ _id: context.user._id });
+
+      const isGroupOwner = user.ownedGroups.some((group) =>
+        group._id.equals(groupId)
+      );
+
+      const isMember = user.groupsAsMember.some((group) =>
+        group._id.equals(groupId)
+      );
+
+      return { ...getGroup.toObject(), isMember, isGroupOwner };
     },
 
     getAllUsers: async () => {
@@ -99,7 +114,12 @@ const resolvers = {
         if (newGroup) {
           const updatedUser = await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $addToSet: { ownedGroups: newGroup._id } },
+            {
+              $push: {
+                ownedGroups: newGroup._id,
+                groupsAsMember: newGroup._id,
+              },
+            },
             { new: true }
           );
 
@@ -126,6 +146,16 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { skills: tag } }
         );
+      }
+    },
+
+    createHelpWanted: async (
+      parent,
+      { groupId, title, description },
+      context
+    ) => {
+      if (context.user) {
+        return await HelpWanted.create({ group: groupId, title, description });
       }
     },
   },

@@ -57,7 +57,7 @@ const SearchGroupsPage = () => {
       <div className="search-section">
         {searchType === 'groupName' ? (
           <div className="name-search">
-            <InputOne value={searchTerm} onChange={handleSearch} />
+            <InputOne placeholder='Group Name' value={searchTerm} onChange={handleSearch} />
             <ButtonOne buttonName="Search" onClick={searchForGroup} />
           </div>
         ) : searchType === 'tags' ? (

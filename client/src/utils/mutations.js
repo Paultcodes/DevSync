@@ -78,3 +78,11 @@ export const ADD_TAG = gql`
  }
 `
 
+export const CREATE_HELP_WANTED = gql`
+mutation createHelpWanted($groupId: ID!, $title: String!, $description: String!) {
+  createHelpWanted(groupId: $groupId, title: $title, description: $description) {
+    _id 
+  }
+}
+
+`

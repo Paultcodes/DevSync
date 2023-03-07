@@ -10,6 +10,7 @@ import { createContext, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_GROUP } from '../../utils/queries';
+import { ButtonOne } from '../../components/buttons/Buttons';
 
 export const GroupDataContext = createContext();
 
@@ -17,17 +18,27 @@ const GroupPage = () => {
   const [currentSection, setCurrentSection] = useState('chat');
   const { groupId } = useParams();
 
-  const { loading, data } = useQuery(GET_GROUP, {
+  const { loading, data, error } = useQuery(GET_GROUP, {
     variables: { groupId: groupId },
   });
 
   const groupData = data?.getGroup || {};
+  console.log(error);
 
   if (loading) {
     return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
   }
 
   console.log(groupData);
+
+  if (!groupData.isMember) {
+    return (
+      <div>
+        <h1>Would You like to join this group? </h1>
+        <ButtonOne buttonName="Join" />
+      </div>
+    );
+  }
   return (
     <GroupDataContext.Provider value={groupData}>
       <div className="main-group-div">
