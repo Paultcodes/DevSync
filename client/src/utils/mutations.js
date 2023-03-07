@@ -77,12 +77,4 @@ export const ADD_TAG = gql`
   }
  }
 `
-export const FIND_GROUP = gql`
-  mutation findGroup($groupName: String!) {
-    findGroup(groupName: $groupName) {
-      _id
-      username
-      email
-    }
-  }
-`;
+
