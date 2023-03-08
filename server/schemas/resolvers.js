@@ -10,7 +10,6 @@ const resolvers = {
         return await User.findOne({ _id: context.user._id }).populate([
           { path: 'ownedGroups' },
           { path: 'invites.group', select: 'groupName' },
-          { path: 'groupsAsMember' },
         ]);
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
