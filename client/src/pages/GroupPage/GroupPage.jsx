@@ -64,7 +64,7 @@ const GroupPage = () => {
         </div>
         <div className="content-section">
           {currentSection === 'chat' ? (
-            <GroupChat />
+            <GroupChat refetch={refetch}/>
           ) : currentSection === 'tasks' ? (
             <TaskPage refetch={refetch} />
           ) : currentSection === 'members' ? (

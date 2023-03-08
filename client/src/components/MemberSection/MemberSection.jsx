@@ -20,6 +20,8 @@ import { FaSearch, FaPencilAlt, FaUser, FaPlus } from 'react-icons/fa';
 import auth from '../../utils/auth';
 
 const MemberSection = ({ groupOwner }) => {
+  const [showInviteResponse, setShowInviteResponse] = useState(false);
+  const [showHelpResponse, setShowHelpResponse] = useState(false);
   const { groupId } = useParams();
 
   const [inviteUserToGroup, { data: inviteUserData, error: inviteUserError }] =
@@ -52,6 +54,7 @@ const MemberSection = ({ groupOwner }) => {
       const { data } = await inviteUserToGroup({
         variables: { groupId, userId },
       });
+      setShowInviteResponse(true);
     } catch (err) {
       console.log(err);
     }
@@ -71,6 +74,11 @@ const MemberSection = ({ groupOwner }) => {
     try {
       const { data } = await createHelpWanted({
         variables: { ...helpWantedForm, groupId },
+      });
+      setShowHelpResponse(true);
+      setHelpWantedForm({
+        title: '',
+        description: '',
       });
     } catch (err) {
       console.log(err);
@@ -127,15 +135,18 @@ const MemberSection = ({ groupOwner }) => {
         </div>
       )}
       {renderForm === 'invite' ? (
-        <div className="search-user">
-          <InputOne onChange={handleSearch} placeholder="Username" />
-          <ButtonOne onClick={searchForUser}>
-            <FaSearch />
-          </ButtonOne>
+        <div className="invite-form">
+          <div className="search-user">
+            <InputOne onChange={handleSearch} placeholder="Username" />
+            <ButtonOne onClick={searchForUser}>
+              <FaSearch />
+            </ButtonOne>
+          </div>
         </div>
       ) : (
         renderForm === 'help' && (
           <div className="help-wanted">
+            {showHelpResponse && <p>Help Wanted Posted ✅</p>}
             <InputTwo
               name="title"
               onChange={handleChange}
@@ -154,17 +165,22 @@ const MemberSection = ({ groupOwner }) => {
       <div className="result-section">
         {searched && !user && <p>No user found</p>}
         {user && (
-          <div className="result-card">
-            <Link className="profile-icon" to={`/profile/${user._id}`}>
-              <FaUser />
-            </Link>
-            <ButtonFour
-              onClick={() => {
-                handleInvite(user._id);
-              }}
-              buttonName={<FaPlus />}
-            />
-            {user.username}
+          <div>
+            {showInviteResponse && (
+              <p style={{ textAlign: 'center' }}>Invite sent ✅</p>
+            )}
+            <div className="result-card">
+              <Link className="profile-icon" to={`/profile/${user._id}`}>
+                <FaUser />
+              </Link>
+              <ButtonFour
+                onClick={() => {
+                  handleInvite(user._id);
+                }}
+                buttonName={<FaPlus />}
+              />
+              {user.username}
+            </div>
           </div>
         )}
       </div>
