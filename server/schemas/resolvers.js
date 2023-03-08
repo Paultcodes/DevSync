@@ -27,11 +27,11 @@ const resolvers = {
       if (context.user) {
         return await Group.find({ type: 'open' });
       }
-      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn)
     },
 
     getGroup: async (parent, { groupId }, context) => {
-      const getGroup = await Group.findOne({ _id: groupId });
+      const getGroup = await Group.findOne({ _id: groupId }).populate('members');
 
       if (!getGroup) {
         throw new Error('Group not found');

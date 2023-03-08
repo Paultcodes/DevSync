@@ -68,7 +68,7 @@ const GroupPage = () => {
           ) : currentSection === 'tasks' ? (
             <TaskPage refetch={refetch} />
           ) : currentSection === 'members' ? (
-            <MemberSection groupOwner={groupData.isGroupOwner}/>
+            <MemberSection groupMembers={groupData.members} groupOwner={groupData.isGroupOwner}/>
           ) : (
             <GroupSettings />
           )}

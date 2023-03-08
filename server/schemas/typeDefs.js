@@ -23,7 +23,7 @@ const typeDefs = gql`
   type testGroup {
     _id: ID 
     groupName: String  
-    members:[User]!
+    members:[ID]!
 
 
   }
@@ -83,7 +83,7 @@ const typeDefs = gql`
     groupName: String 
     type: String 
     owner: String 
-    members: [Member]!
+    members: [User]!
     invites: [Invite]!
     tags: [String]!
     tasks: [Task]!

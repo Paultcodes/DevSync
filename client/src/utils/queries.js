@@ -12,6 +12,7 @@ export const GET_ME = gql`
       ownedGroups {
         _id
         groupName
+        members
       }
       invites {
         _id 
@@ -86,6 +87,11 @@ export const GET_GROUP = gql`
       _id
       groupName
       type
+      members {
+        _id 
+        username 
+        email
+      }
       isMember
       isGroupOwner
       chatMessages {

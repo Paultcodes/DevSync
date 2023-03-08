@@ -54,7 +54,7 @@ const CreateGroupPage = () => {
         variables: { ...groupForm },
       });
       if (data) {
-        refetch()
+        refetch();
       }
     } catch (err) {
       console.log(err);
@@ -102,7 +102,17 @@ const CreateGroupPage = () => {
       <div className="card-section">
         {userData ? (
           userData.map((group) => {
-            return <Link to={`/group/${group._id}`}>{group.groupName}</Link>;
+            return (
+              <Link className="group-card" to={`/group/${group._id}`}>
+                <p>{group.groupName}</p>
+                <p>
+                  {group.members.length}{' '}
+                  {group.members.length > 1 || group.members.length === 0
+                    ? 'members'
+                    : 'member'}
+                </p>
+              </Link>
+            );
           })
         ) : (
           <>Create a group</>

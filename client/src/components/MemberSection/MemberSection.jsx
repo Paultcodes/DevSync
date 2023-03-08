@@ -19,7 +19,7 @@ import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import { FaSearch, FaPencilAlt, FaUser, FaPlus } from 'react-icons/fa';
 import auth from '../../utils/auth';
 
-const MemberSection = ({ groupOwner }) => {
+const MemberSection = ({ groupOwner, groupMembers }) => {
   const [showInviteResponse, setShowInviteResponse] = useState(false);
   const [showHelpResponse, setShowHelpResponse] = useState(false);
   const { groupId } = useParams();
@@ -185,18 +185,13 @@ const MemberSection = ({ groupOwner }) => {
         )}
       </div>
       <div className="member-card-section">
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
+        {groupMembers ? (
+          groupMembers.map((member) => {
+            return <UserCard username={member.username} email={member.email} />;
+          })
+        ) : (
+          <>No members</>
+        )}
       </div>
     </div>
   );
