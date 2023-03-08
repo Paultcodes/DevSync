@@ -13,6 +13,11 @@ export const GET_ME = gql`
         _id
         groupName
         
+        
+      }
+      groupsAsMember {
+        _id
+        groupName
       }
       invites {
         _id
