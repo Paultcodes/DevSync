@@ -32,7 +32,7 @@ const resolvers = {
       const getGroup = await Group.findOne({ _id: groupId });
 
       if (!getGroup) {
-       throw new Error('Group not found');
+        throw new Error('Group not found');
       }
 
       const user = await User.findOne({ _id: context.user._id });
@@ -53,7 +53,7 @@ const resolvers = {
     },
 
     getHelpWantedAds: async () => {
-      return await HelpWanted.find({}).populate("group");;
+      return await HelpWanted.find({}).populate('group');
     },
 
     searchGroupName: async (parent, { groupName }, context) => {
@@ -116,6 +116,11 @@ const resolvers = {
         });
 
         if (newGroup) {
+          await Group.findOneAndUpdate(
+            { _id: newGroup._id },
+            { $push: { members: context.user._id } },
+            { new: true }
+          );
           const updatedUser = await User.findOneAndUpdate(
             { _id: context.user._id },
             {
@@ -160,6 +165,45 @@ const resolvers = {
     ) => {
       if (context.user) {
         return await HelpWanted.create({ group: groupId, title, description });
+      }
+    },
+
+    inviteUserToGroup: async (_, { userId, groupId }, context) => {
+      if (context.user) {
+        const group = await Group.findOne({ _id: groupId });
+
+        const isMember = group.members.some((member) =>
+          member._id.equals(userId)
+        );
+
+        if (isMember) {
+          throw new Error('User is already a member of this group');
+        } else {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { $push: { invites: { group: groupId } } },
+            { new: true }
+          );
+          return updatedUser;
+        }
+      }
+    },
+
+    createMessage: async (parent, { messageText, groupId }, context) => {
+      if (context.user) {
+        const updatedGroup = await Group.findOneAndUpdate(
+          { _id: groupId },
+          {
+            $push: {
+              chatMessages: {
+                messageText: messageText,
+                from: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
+        return updatedGroup;
       }
     },
   },

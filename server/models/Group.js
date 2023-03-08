@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const groupSchema = new Schema(
   {
@@ -28,6 +29,11 @@ const groupSchema = new Schema(
         },
         from: {
           type: String,
+        },
+        timestamp: {
+          type: Date,
+          default: Date.now,
+          get: (timestamp) => dateFormat(timestamp),
         },
       },
     ],

@@ -44,6 +44,10 @@
   color: black;
 }
 
+.letter-profile {
+  border-radius: 50%;
+}
+
 .text-align {
     text-align: center;
 }

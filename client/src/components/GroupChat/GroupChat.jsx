@@ -1,91 +1,76 @@
 import React from 'react';
 import './ChatBox.css';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { useMutation } from '@apollo/client';
+import { SEND_MESSAGE } from '../../utils/mutations';
+import auth from '../../utils/auth';
+import { useParams } from 'react-router-dom';
+import { GroupDataContext } from '../../pages/GroupPage/GroupPage';
 
-function ChatBox(props) {
+function ChatBox() {
+  const messages = useContext(GroupDataContext);
   const chatBoxRef = useRef(null);
+  const { groupId } = useParams();
+  const [allMessages, setAllMessages] = useState([]);
+  const [messageText, setMessageText] = useState('');
+
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    setAllMessages(messages.chatMessages);
+    console.log(allMessages);
+  }, []);
+
+  const [createMessage, { error, data }] = useMutation(SEND_MESSAGE);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+
+    const token = auth.loggedIn() ? auth.getToken() : null;
+
+    if (!token) {
+      return;
+    }
+
+    try {
+      const { data } = await createMessage({
+        variables: { messageText, groupId },
+      });
+      console.log(data.createMessage.chatMessages);
+      setAllMessages(data.createMessage.chatMessages);
+      console.log(allMessages);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleChange = (e) => {
+    setMessageText(e.target.value);
+  };
 
   useEffect(() => {
     chatBoxRef.current.scrollTo(0, chatBoxRef.current.scrollHeight);
   }, []);
 
-  const messages = [
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-    {
-      type: 'private',
-      text: 'hello worl asdf lkajsdklfj lkasjdf',
-      time: '12/34/34',
-    },
-  ];
-
   return (
     <div className="chat-box">
       <div className="messages" ref={chatBoxRef}>
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.type}`}>
-            <p style={{fontWeight: '900'}}>John Smith</p>
-            <p className="text">{message.text}</p>
-            <p className="time">{message.time}</p>
+        {allMessages.map(({messageText, from, timestamp}) => (
+          <div  key={messageText} >
+            <p style={{ fontWeight: '900' }}>{from}</p>
+            <p className="text">{messageText}</p>
+            <p className="time">{timestamp}</p>
           </div>
         ))}
       </div>
       <div className="input">
-        <input type="text" placeholder="Type your message here" />
-        <button>Send</button>
+        <input
+          value={messageText}
+          onChange={handleChange}
+          type="text"
+          placeholder="Type your message here"
+        />
+        <button onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import MemberSection from '../../components/MemberSection/MemberSection';
 import GroupSettings from '../../components/GroupSettings/GroupSettings';
 import { createContext, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_GROUP } from '../../utils/queries';
 import { ButtonOne } from '../../components/buttons/Buttons';
 
@@ -17,6 +17,7 @@ export const GroupDataContext = createContext();
 const GroupPage = () => {
   const [currentSection, setCurrentSection] = useState('chat');
   const { groupId } = useParams();
+  
 
   const { loading, data, error } = useQuery(GET_GROUP, {
     variables: { groupId: groupId },
@@ -59,6 +60,8 @@ const GroupPage = () => {
             <GroupSettings />
           )}
         </div>
+      </div>
+      <div>
       </div>
     </GroupDataContext.Provider>
   );

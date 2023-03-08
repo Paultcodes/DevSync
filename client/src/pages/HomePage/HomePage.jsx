@@ -13,7 +13,7 @@ const HomePage = () => {
   console.log(userData);
 
   if (loading) {
-    return <h1>Loading</h1>
+    return <h1>Loading</h1>;
   }
   return (
     <div className="home">
@@ -25,7 +25,12 @@ const HomePage = () => {
               {userData.invites.length === 0 ? (
                 <span>You have no new notifications</span>
               ) : (
-                <span>You have new </span>
+                <span>
+                  You have {userData.invites.length} new{' '}
+                  {userData.invites.length > 1
+                    ? 'notifications'
+                    : 'notification'}
+                </span>
               )}
             </h1>
           ) : (
