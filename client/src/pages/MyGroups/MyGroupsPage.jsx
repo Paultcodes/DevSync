@@ -6,7 +6,7 @@ const MyGroupsPage = () => {
   const { loading, data } = useQuery(GET_ME);
   console.log(data);
 
-  const userData = data?.me.ownedGroups || [];
+  const userData = data?.me || [];
 
   console.log(userData);
   if (loading) {
@@ -22,6 +22,7 @@ const MyGroupsPage = () => {
         );
       })}
     </div>
+    
   );
 };
 
