@@ -17,13 +17,14 @@ const typeDefs = gql`
     skills: [String]!
     invites: [ReceivedInvite]!
     ownedGroups: [testGroup]!
-    groupsAsMember: [userGroups]!
+    groupsAsMember: [testGroup]!
   }
 
   type testGroup {
     _id: ID 
     groupName: String  
     members:[User]!
+
 
   }
 
