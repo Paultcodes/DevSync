@@ -26,8 +26,8 @@ const MyGroupsPage = () => {
       </Link>)
      })}
 </div>
-<div className="mygroups">
-      <h1>My Groups</h1>
+<div className="membergroups">
+      <h1>Groups I am in </h1>
   
     {userData.groupsAsMember.map((data) => {
       
