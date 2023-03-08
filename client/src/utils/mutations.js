@@ -101,6 +101,7 @@ mutation createMessage($messageText: String!, $groupId: ID!) {
     chatMessages {
       messageText 
       from 
+      timestamp 
     }
   }
 }

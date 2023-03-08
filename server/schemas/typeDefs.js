@@ -40,6 +40,7 @@ const typeDefs = gql`
   type Message {
     messageText: String 
     from: String 
+    timestamp: String
   }
 
   type ReceivedInvite {

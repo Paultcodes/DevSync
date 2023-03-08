@@ -7,12 +7,14 @@ import auth from '../../utils/auth';
 import { useParams } from 'react-router-dom';
 import { GroupDataContext } from '../../pages/GroupPage/GroupPage';
 
-function ChatBox(props) {
+function ChatBox() {
   const messages = useContext(GroupDataContext);
   const chatBoxRef = useRef(null);
   const { groupId } = useParams();
   const [allMessages, setAllMessages] = useState([]);
   const [messageText, setMessageText] = useState('');
+
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     setAllMessages(messages.chatMessages);
@@ -53,11 +55,11 @@ function ChatBox(props) {
   return (
     <div className="chat-box">
       <div className="messages" ref={chatBoxRef}>
-        {allMessages.map(({messageText, from}) => (
-          <div key={messageText} >
+        {allMessages.map(({messageText, from, timestamp}) => (
+          <div  key={messageText} >
             <p style={{ fontWeight: '900' }}>{from}</p>
             <p className="text">{messageText}</p>
-            <p className="time">{from}</p>
+            <p className="time">{timestamp}</p>
           </div>
         ))}
       </div>
