@@ -10,18 +10,31 @@ import { createContext, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_GROUP } from '../../utils/queries';
+import { ADD_MEMBER } from '../../utils/mutations';
 import { ButtonOne } from '../../components/buttons/Buttons';
 
 export const GroupDataContext = createContext();
 
 const GroupPage = () => {
+  const [addMember, { data: addMemberData, error: addMemberError }] =
+    useMutation(ADD_MEMBER);
   const [currentSection, setCurrentSection] = useState('chat');
   const { groupId } = useParams();
-  
 
-  const { loading, data, error } = useQuery(GET_GROUP, {
+  const { loading, data, error, refetch } = useQuery(GET_GROUP, {
     variables: { groupId: groupId },
   });
+
+  const handleAddMember = async () => {
+    try {
+      const { data } = addMember({
+        variables: { groupId: groupId },
+      });
+      window.location.reload()
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const groupData = data?.getGroup || {};
   console.log(error);
@@ -36,7 +49,7 @@ const GroupPage = () => {
     return (
       <div>
         <h1>Would You like to join this group? </h1>
-        <ButtonOne buttonName="Join" />
+        <ButtonOne buttonName="Join" onClick={handleAddMember} />
       </div>
     );
   }
@@ -53,16 +66,15 @@ const GroupPage = () => {
           {currentSection === 'chat' ? (
             <GroupChat />
           ) : currentSection === 'tasks' ? (
-            <TaskPage />
+            <TaskPage refetch={refetch} />
           ) : currentSection === 'members' ? (
-            <MemberSection />
+            <MemberSection groupOwner={groupData.isGroupOwner}/>
           ) : (
             <GroupSettings />
           )}
         </div>
       </div>
-      <div>
-      </div>
+      <div></div>
     </GroupDataContext.Provider>
   );
 };

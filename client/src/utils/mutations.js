@@ -106,3 +106,34 @@ mutation createMessage($messageText: String!, $groupId: ID!) {
   }
 }
 `
+
+export const INVITE_RESPONSE = gql`
+mutation inviteResponse($response: String!, $groupId: ID!, $inviteId: ID!) {
+  inviteResponse(response: $response, groupId: $groupId, inviteId: $inviteId) {
+    invites {
+      status
+      group {
+        groupName 
+      }
+    }
+  }
+}
+
+`
+
+export const CREATE_TASK = gql`
+ mutation createTask($assignee: String!, $description: String!, $type: String!, $groupId: ID!) {
+  createTask(assignee: $assignee, description: $description, type: $type, groupId: $groupId) {
+    _id 
+  }
+ }
+
+`
+
+export const ADD_MEMBER = gql`
+mutation addMember($groupId: ID!) {
+  addMember(groupId: $groupId) {
+    _id 
+  }
+}
+`

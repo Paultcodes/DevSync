@@ -10,13 +10,16 @@ import { useState } from 'react';
 import { InputOne, TextArea, InputTwo } from '../inputs/Inputs';
 import { Link } from 'react-router-dom';
 import { SEARCH_USER } from '../../utils/queries';
-import { CREATE_HELP_WANTED, INVITE_USER_TO_GROUP } from '../../utils/mutations';
+import {
+  CREATE_HELP_WANTED,
+  INVITE_USER_TO_GROUP,
+} from '../../utils/mutations';
 import { useParams } from 'react-router-dom';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import { FaSearch, FaPencilAlt, FaUser, FaPlus } from 'react-icons/fa';
 import auth from '../../utils/auth';
 
-const MemberSection = () => {
+const MemberSection = ({ groupOwner }) => {
   const { groupId } = useParams();
 
   const [inviteUserToGroup, { data: inviteUserData, error: inviteUserError }] =
@@ -105,22 +108,24 @@ const MemberSection = () => {
 
   return (
     <div className="member-section">
-      <div className="button-section">
-        <ButtonOne
-          buttonName={<FaPencilAlt />}
-          onClick={() => setRenderForm('help')}
-        >
-          {' '}
-          Post A Help Wanted Ad
-        </ButtonOne>
-        <ButtonOne
-          buttonName={<FaPlus />}
-          onClick={() => setRenderForm('invite')}
-        >
-          {' '}
-          Invite A User
-        </ButtonOne>
-      </div>
+      {groupOwner && (
+        <div className="button-section">
+          <ButtonOne
+            buttonName={<FaPencilAlt />}
+            onClick={() => setRenderForm('help')}
+          >
+            {' '}
+            Post A Help Wanted Ad
+          </ButtonOne>
+          <ButtonOne
+            buttonName={<FaPlus />}
+            onClick={() => setRenderForm('invite')}
+          >
+            {' '}
+            Invite A User
+          </ButtonOne>
+        </div>
+      )}
       {renderForm === 'invite' ? (
         <div className="search-user">
           <InputOne onChange={handleSearch} placeholder="Username" />

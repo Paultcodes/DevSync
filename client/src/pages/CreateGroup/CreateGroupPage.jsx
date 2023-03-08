@@ -2,18 +2,22 @@ import { useState } from 'react';
 import { InputOne, InputTwo } from '../../components/inputs/Inputs';
 import { ButtonOne } from '../../components/buttons/Buttons';
 import HomeCard from '../../components/HomeCards/HomeCard';
+import { Link } from 'react-router-dom';
 import './creategroup.css';
 
 import auth from '../../utils/auth';
 
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_GROUP } from '../../utils/mutations';
 import { Redirect } from 'react-router-dom';
+import { GET_ME } from '../../utils/queries';
 
 const CreateGroupPage = () => {
-  const [createGroup, { data, error }] = useMutation(CREATE_GROUP);
+  const { loading, data, refetch } = useQuery(GET_ME);
+  const [createGroup, { data: createData, error }] = useMutation(CREATE_GROUP);
   const [groupType, setGroupType] = useState('open');
-  
+  const userData = data?.me.ownedGroups || [];
+  console.log(userData);
 
   const [groupForm, setGroupForm] = useState({
     groupName: '',
@@ -50,7 +54,7 @@ const CreateGroupPage = () => {
         variables: { ...groupForm },
       });
       if (data) {
-        
+        refetch()
       }
     } catch (err) {
       console.log(err);
@@ -96,18 +100,13 @@ const CreateGroupPage = () => {
         <ButtonOne buttonName="Submit" onClick={handleSubmit} />
       </div>
       <div className="card-section">
-        <HomeCard
-          title="Group type"
-          text="lorem asdfasjflkd asjdfk asjfk ask jdfaskdlf jaskld fjaskd fjaskld fjaskldd jf"
-        />
-        <HomeCard
-          title="Test"
-          text="lorem asdfasjflkd asjdfk asjfk ask jdfaskdlf jaskld fjaskd fjaskld fjaskldd jf"
-        />
-        <HomeCard
-          title="Why?"
-          text="lorem asdfasjflkd asjdfk asjfk ask jdfaskdlf jaskld fjaskd fjaskld fjaskldd jf"
-        />
+        {userData ? (
+          userData.map((group) => {
+            return <Link to={`/group/${group._id}`}>{group.groupName}</Link>;
+          })
+        ) : (
+          <>Create a group</>
+        )}
       </div>
     </form>
   );

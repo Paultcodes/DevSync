@@ -12,14 +12,14 @@ export const GET_ME = gql`
       ownedGroups {
         _id
         groupName
-        
-        
       }
-    
       invites {
-        _id
-        groupName
+        _id 
         status
+        group {
+          _id
+          groupName 
+        }
       }
       skills
     }
@@ -91,6 +91,12 @@ export const GET_GROUP = gql`
       chatMessages {
         messageText 
         from 
+        timestamp
+      }
+      tasks {
+        assignee
+        description
+        type
       }
     }
   }

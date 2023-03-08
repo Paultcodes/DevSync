@@ -5,10 +5,32 @@ import { GET_ME } from '../../utils/queries';
 import { useEffect, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { INVITE_RESPONSE } from '../../utils/mutations';
+import auth from '../../utils/auth';
 
 const ProfilePage = () => {
   const { loading, data } = useQuery(GET_ME);
   const [picSource, setPicSource] = useState('');
+  const [inviteResponse, { error, data: responseData }] =
+    useMutation(INVITE_RESPONSE);
+
+  const handleResponse = async (groupId, inviteId, response) => {
+    console.log(groupId + inviteId + response)
+    const token = auth.loggedIn() ? auth.getToken() : null;
+
+    if (!token) {
+      return;
+    }
+
+    try {
+      const { data } = inviteResponse({
+        variables: { groupId, inviteId, response },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const userData = data?.me || {};
 
@@ -51,6 +73,33 @@ const ProfilePage = () => {
           <FaCog />
         </Link>
       </div>
+
+      <div className="middle-section section">
+        {userData.invites.map((invite) => {
+          return (
+            <div className="invite-card">
+              {invite.group.groupName} has invited you to join their group
+              <div className="invite-buttons">
+                <button
+                  onClick={() =>
+                    handleResponse(invite.group._id, invite._id, 'accept')
+                  }
+                >
+                  ✅
+                </button>
+                <button
+                  onClick={() =>
+                    handleResponse(invite.group._id, invite._id, 'decline')
+                  }
+                >
+                  ❌
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       <div className="profile-right section">
         <div className="about-me text-align">
           <h2>About Me</h2>
