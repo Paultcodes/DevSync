@@ -15,10 +15,7 @@ export const GET_ME = gql`
         
         
       }
-      groupsAsMember {
-        _id
-        groupName
-      }
+    
       invites {
         _id
         groupName
