@@ -78,6 +78,14 @@ export const ADD_TAG = gql`
  }
 `
 
+export const INVITE_USER_TO_GROUP = gql`
+ mutation inviteUserToGroup($userId: ID!, $groupId: ID!) {
+  inviteUserToGroup(userId: $userId, groupId: $groupId) {
+    _id
+  }
+ }
+`
+
 export const CREATE_HELP_WANTED = gql`
 mutation createHelpWanted($groupId: ID!, $title: String!, $description: String!) {
   createHelpWanted(groupId: $groupId, title: $title, description: $description) {
@@ -85,4 +93,16 @@ mutation createHelpWanted($groupId: ID!, $title: String!, $description: String!)
   }
 }
 
+`
+
+export const SEND_MESSAGE = gql`
+mutation createMessage($messageText: String!, $groupId: ID!) {
+  createMessage(messageText: $messageText, groupId: $groupId) {
+    chatMessages {
+      messageText 
+      from 
+      timestamp 
+    }
+  }
+}
 `

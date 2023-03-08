@@ -5,7 +5,7 @@ import './mygroupspage.css';
 
 const MyGroupsPage = () => {
   const { loading, data } = useQuery(GET_ME);
-  console.log(data)
+  console.log(data);
 
   const userData = data?.me|| [];
 

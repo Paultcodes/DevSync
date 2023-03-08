@@ -46,6 +46,8 @@ export const GET_PROFILE = gql`
       _id
       username
       email
+      firstName 
+      lastName
       skills
     }
   }
@@ -89,6 +91,25 @@ export const GET_GROUP = gql`
       type
       isMember
       isGroupOwner
+      chatMessages {
+        messageText 
+        from 
+      }
     }
   }
-`;
+`
+
+export const GET_HELP_WANTED_ADS = gql`
+  query getHelpWantedAds {
+          getHelpWantedAds{
+            group{
+              _id
+              groupName
+            }
+            _id
+            title
+            description
+          }
+        }
+`
+;

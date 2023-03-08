@@ -39,8 +39,8 @@ const typeDefs = gql`
 
   type Message {
     messageText: String 
-    to: String 
     from: String 
+    timestamp: String
   }
 
   type ReceivedInvite {
@@ -62,6 +62,8 @@ const typeDefs = gql`
     title: String 
     description: String 
   }
+
+  
 
   
 
@@ -96,6 +98,7 @@ const typeDefs = gql`
     searchGroupName(groupName: String!): Group
     searchUser(username: String!): User 
     getGroup(groupId: ID!): Group!
+    getHelpWantedAds: [HelpWanted]
   }
 
   type Mutation {
@@ -104,7 +107,9 @@ const typeDefs = gql`
     createGroup(groupName: String!, type: String!): User
     updateUsername(username: String!): User 
     addTagsToUser(tag: String!): User
+    inviteUserToGroup(groupId: ID!, userId: ID!): User 
     createHelpWanted(groupId: ID!, title: String!, description: String!): HelpWanted
+    createMessage(messageText: String!, groupId: ID!): Group 
   }
 `;
 
