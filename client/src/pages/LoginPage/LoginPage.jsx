@@ -47,6 +47,7 @@ const LoginPage = () => {
             onChange={handleChange}
             name="password"
             placeholder="Password"
+            type='password'
           />
           <div style={{textAlign: 'center'}}>{errorMessage}</div>
           <ButtonOne onClick={handleSubmit} buttonName="Login" />

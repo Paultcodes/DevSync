@@ -104,6 +104,7 @@ export const GET_GROUP = gql`
         description
         type
       }
+      tags 
     }
   }
 `

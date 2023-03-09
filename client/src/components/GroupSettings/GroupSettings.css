@@ -1,0 +1,11 @@
+.tag-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.all-tags {
+    display: flex;
+    flex-direction: row;
+}

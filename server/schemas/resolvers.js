@@ -17,7 +17,6 @@ const resolvers = {
     },
 
     getProfile: async (parent, { userId }) => {
-
       return await User.findOne({ _id: userId });
     },
 
@@ -25,11 +24,13 @@ const resolvers = {
       if (context.user) {
         return await Group.find({ type: 'open' });
       }
-      throw new AuthenticationError(errorMessage.needToBeLoggedIn)
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
     getGroup: async (parent, { groupId }, context) => {
-      const getGroup = await Group.findOne({ _id: groupId }).populate('members');
+      const getGroup = await Group.findOne({ _id: groupId }).populate(
+        'members'
+      );
 
       if (!getGroup) {
         throw new Error('Group not found');
@@ -276,6 +277,19 @@ const resolvers = {
         );
 
         return updateUser;
+      }
+    },
+
+    addTagsToGroup: async (_, { groupId, tags }) => {
+      try {
+        const group = await Group.findOneAndUpdate(
+          { _id: groupId },
+          { $set: { tags: tags } },
+          { new: true }
+        );
+        return group;
+      } catch (error) {
+        console.log(error);
       }
     },
   },

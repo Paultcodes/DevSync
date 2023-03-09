@@ -69,7 +69,7 @@ const GroupPage = () => {
           ) : currentSection === 'members' ? (
             <MemberSection groupMembers={groupData.members} groupOwner={groupData.isGroupOwner}/>
           ) : (
-            <GroupSettings />
+            <GroupSettings refetch={refetch}/>
           )}
         </div>
       </div>

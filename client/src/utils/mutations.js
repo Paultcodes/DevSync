@@ -137,3 +137,12 @@ mutation addMember($groupId: ID!) {
   }
 }
 `
+
+export const ADD_TAGS_TO_GROUP = gql`
+  mutation addTagsToGroup($groupId: ID!, $tags: [String!]!) {
+    addTagsToGroup(groupId: $groupId, tags: $tags) {
+      _id
+      groupName
+    }
+  }
+`;

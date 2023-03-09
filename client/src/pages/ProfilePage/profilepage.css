@@ -6,6 +6,8 @@
   flex-wrap: wrap;
   height: 100%;
   width: 100%;
+  gap: 1rem;
+  
 }
 
 .profile-page::after {
@@ -37,6 +39,8 @@
   justify-content: space-around;
   align-items: center;
   padding: 10px;
+  z-index: 1;
+ 
 }
 
 .settings-button {

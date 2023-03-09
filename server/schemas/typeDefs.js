@@ -121,6 +121,7 @@ const typeDefs = gql`
     createMessage(messageText: String!, groupId: ID!): Group 
     inviteResponse(response: String!, groupId: ID!, inviteId: ID!): User 
     addMember(groupId: ID!): User
+    addTagsToGroup(groupId: ID!, tags: [String!]!): Group!
   }
 `;
 

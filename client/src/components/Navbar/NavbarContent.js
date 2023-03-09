@@ -1,7 +1,7 @@
 export const loggedInContent = [
   { route: '/profile', name: 'Profile' },
   { route: '/searchgroups', name: 'Search Groups' },
-  { route: '/creategroup', name: 'Create Group' },
+  { route: '/creategroup', name: 'Groups' },
 ];
 
 
