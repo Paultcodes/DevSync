@@ -18,12 +18,10 @@ const ProfileSettings = () => {
 
   const handleTagSelected = (event) => {
     setSelectedTag(event.target.value);
-    console.log(selectedTag);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(selectedTag);
 
     try {
       const { data } = addTagsToUser({
@@ -35,7 +33,6 @@ const ProfileSettings = () => {
     }
   };
 
-  console.log(userData.skills);
 
   const tagOptions = [
     'Javascript',

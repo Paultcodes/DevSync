@@ -7,16 +7,16 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return await User.findOne({ _id: context.user._id }).populate([
+        const user = await User.findOne({ _id: context.user._id }).populate([
           { path: 'ownedGroups' },
-          { path: 'invites.group', select: 'groupName' },
+          { path: 'invites.group' },
         ]);
+        return user;
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
     getProfile: async (parent, { userId }) => {
-      console.log(userId);
 
       return await User.findOne({ _id: userId });
     },
@@ -25,11 +25,11 @@ const resolvers = {
       if (context.user) {
         return await Group.find({ type: 'open' });
       }
-      throw new AuthenticationError(errorMessage.needToBeLoggedIn);
+      throw new AuthenticationError(errorMessage.needToBeLoggedIn)
     },
 
     getGroup: async (parent, { groupId }, context) => {
-      const getGroup = await Group.findOne({ _id: groupId });
+      const getGroup = await Group.findOne({ _id: groupId }).populate('members');
 
       if (!getGroup) {
         throw new Error('Group not found');
@@ -76,7 +76,6 @@ const resolvers = {
       parent,
       { username, email, password, firstName, lastName }
     ) => {
-      console.log('asdfasdf');
       const user = await User.create({
         username,
         email,
@@ -149,7 +148,6 @@ const resolvers = {
     },
 
     addTagsToUser: async (_, { tag }, context) => {
-      console.log(tag);
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -204,6 +202,80 @@ const resolvers = {
           { new: true }
         );
         return updatedGroup;
+      }
+    },
+
+    inviteResponse: async (
+      parent,
+      { response, groupId, inviteId },
+      context
+    ) => {
+      if (context.user) {
+        if (response === 'accept') {
+          await Group.findOneAndUpdate(
+            { _id: groupId },
+            { $push: { members: context.user._id } },
+            { new: true }
+          );
+
+          const user = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            {
+              $pull: { invites: { _id: inviteId } },
+              $push: { groupsAsMember: groupId },
+            },
+            { new: true }
+          );
+
+          return user;
+        } else {
+          const user = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { invites: inviteId } },
+            { new: true }
+          );
+          return user;
+        }
+      }
+    },
+
+    createTask: async (
+      parent,
+      { assignee, description, type, groupId },
+      context
+    ) => {
+      if (context.user) {
+        const updateGroup = await Group.findOneAndUpdate(
+          { _id: groupId },
+          {
+            $push: {
+              tasks: {
+                assignee: assignee,
+                description: description,
+                type: type,
+              },
+            },
+          },
+          { new: true }
+        );
+        return updateGroup;
+      }
+    },
+
+    addMember: async (parent, { groupId }, context) => {
+      if (context.user) {
+        await Group.findOneAndUpdate(
+          { _id: groupId },
+          { $push: { members: context.user._id } },
+          { new: true }
+        );
+        const updateUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+
+          { $push: { groupsAsMember: groupId } }
+        );
+
+        return updateUser;
       }
     },
   },

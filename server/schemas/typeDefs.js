@@ -23,7 +23,7 @@ const typeDefs = gql`
   type testGroup {
     _id: ID 
     groupName: String  
-    members:[User]!
+    members:[ID]!
 
 
   }
@@ -46,7 +46,7 @@ const typeDefs = gql`
 
   type ReceivedInvite {
     _id: ID 
-    groupName: String 
+    group: Group  
     status: String 
 
   }
@@ -64,6 +64,12 @@ const typeDefs = gql`
     description: String 
   }
 
+  type Task {
+    assignee: String
+    description: String
+    type: String
+  }
+
   
 
   
@@ -77,9 +83,10 @@ const typeDefs = gql`
     groupName: String 
     type: String 
     owner: String 
-    members: [Member]!
+    members: [User]!
     invites: [Invite]!
     tags: [String]!
+    tasks: [Task]!
     chatMessages: [Message]!
     isMember: Boolean
     isGroupOwner: Boolean 
@@ -108,9 +115,12 @@ const typeDefs = gql`
     createGroup(groupName: String!, type: String!): User
     updateUsername(username: String!): User 
     addTagsToUser(tag: String!): User
+    createTask(assignee: String!, description: String!, type: String!, groupId: ID!): Group 
     inviteUserToGroup(groupId: ID!, userId: ID!): User 
     createHelpWanted(groupId: ID!, title: String!, description: String!): HelpWanted
     createMessage(messageText: String!, groupId: ID!): Group 
+    inviteResponse(response: String!, groupId: ID!, inviteId: ID!): User 
+    addMember(groupId: ID!): User
   }
 `;
 

@@ -8,9 +8,11 @@
 
 .card-section {
   display: flex;
-  flex-direction: row;
-  gap: 4rem;
+  flex-direction: column;
   flex-wrap: wrap;
+  gap: 1rem;
+  
+  
 }
 
 .create-group-input {
@@ -18,4 +20,12 @@
     flex-direction: column;
     gap: 3rem;
     align-items: center;
+}
+
+.group-card {
+  text-decoration: none;
+  background-color: aliceblue;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
 }

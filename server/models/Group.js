@@ -53,15 +53,11 @@ const groupSchema = new Schema(
 
     tasks: [
       {
-        taskName: {
+        assignee: {
           type: String,
         },
-        assignedTo: {
-          type: String,
-        },
-        completed: {
-          type: Boolean,
-          default: false,
+        description: {
+          type: String
         },
         type: {
           type: String,

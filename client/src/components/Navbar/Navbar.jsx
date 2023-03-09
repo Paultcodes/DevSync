@@ -7,7 +7,7 @@ import auth from '../../utils/auth';
 import { loggedInContent } from './NavbarContent';
 
 import { Link } from 'react-router-dom';
-
+//asdf
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 

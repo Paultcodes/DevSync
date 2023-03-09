@@ -26,6 +26,12 @@
   overflow-y: scroll;
 }
 
+.invite-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .result-card {
     display: flex;
     flex-direction: row;

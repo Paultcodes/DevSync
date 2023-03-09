@@ -16,12 +16,10 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
       const { data } = await login({
         variables: { ...formData },
       });
-      console.log(data.login);
       auth.login(data.login.token);
     } catch (err) {
       console.log(err.message);
@@ -33,7 +31,6 @@ const LoginPage = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    console.log(formData);
   };
   return (
     <div className="login">

@@ -10,7 +10,6 @@ import auth from '../../utils/auth';
 const HomePage = () => {
   const { loading, data } = useQuery(GET_ME);
   const userData = data?.me || [];
-  console.log(userData);
 
   if (loading) {
     return <h1>Loading</h1>;

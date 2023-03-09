@@ -1,14 +1,17 @@
 import React from 'react';
 import './TaskCard.css';
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ assignee, description, type}) => {
   return (
     <div className="task-card">
-      <div className="task-card__header">Testing</div>
+      <div className="task-card__header">Task</div>
       <div className="task-card__body">
-        <div className="task-card__assignee">John Smith</div>
+        <div className="task-card__assignee">{assignee}</div>
         <div className="task-card__description">
-          Take care of the styling on the front page
+          {description}
+        </div>
+        <div style={{fontSize: '13px', color: 'grey'}} className="task-card__description">
+          {type}
         </div>
       </div>
     </div>
