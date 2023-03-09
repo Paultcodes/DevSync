@@ -28,7 +28,6 @@ const SearchGroupsPage = () => {
 
   const [searchTag, setSearchedTag] = useState(false);
 
-
   const [selectedTags, setSelectedTags] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,7 +46,7 @@ const SearchGroupsPage = () => {
 
   const [
     searchGroupByTag,
-    { loading: groupTags, error: tagsError, data: tagsData },
+    { loading: groupTagsLoading, error: tagsError, data: tagsData },
   ] = useLazyQuery(SEARCH_GROUP_BY_TAG);
 
   const [
@@ -68,7 +67,7 @@ const SearchGroupsPage = () => {
 
   const handleSubmit = () => {
     setSearchedTag(true);
-    searchGroupByTag({variables: {tags: selectedTags}})
+    searchGroupByTag({ variables: { tags: selectedTags } });
   };
 
   const searchForHelpWanted = () => {
@@ -80,11 +79,14 @@ const SearchGroupsPage = () => {
 
   const ads = adData?.getHelpWantedAds;
 
-  const tData = tagsData?.searchGroupByTag
+  const tData = tagsData?.searchGroupByTag;
+
+  console.log(tData);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
   if (adLoading) return <p>Loading help wanted ads...</p>;
+  if (groupTagsLoading) return <p>loading</p>;
 
   const handleClick = (e) => {
     setSearchType(e.target.name);
@@ -137,7 +139,14 @@ const SearchGroupsPage = () => {
                 </div>
               ))}
               <ButtonOne onClick={handleSubmit} buttonName="Submit" />
-              {tData && <p>{tData.groupName}</p>}
+              {searchTag && tData.length === 0 && (
+                <p>No groups found with these tags 🫤</p>
+              )}
+              {searchTag &&
+                tData.length > 0 &&
+                tData.map((group) => {
+                  return <p>{group.groupName}</p>;
+                })}
             </div>
           </div>
         ) : searchType === 'helpWanted' ? (

@@ -51,15 +51,15 @@ const resolvers = {
 
     searchGroupByTag: async (parent, { tags }, context) => {
       const query = { tags: { $in: tags } };
-
-      Group.find(query, function (err, groups) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log(groups)
-          return groups
-        }
-      });
+    
+      try {
+        const groups = await Group.find(query).exec();
+        console.log(groups);
+        return groups;
+      } catch (error) {
+        console.log(error);
+        throw new Error('Failed to search for groups');
+      }
     },
 
     getAllUsers: async () => {
