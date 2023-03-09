@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import { useMutation } from '@apollo/client';
 import { SEND_MESSAGE } from '../../utils/mutations';
 import auth from '../../utils/auth';
+import {} from 'react-icons/fa'
 import { useParams } from 'react-router-dom';
 import { GroupDataContext } from '../../pages/GroupPage/GroupPage';
 
@@ -31,6 +32,7 @@ function ChatBox({ refetch }) {
         variables: { messageText, groupId },
       });
       refetch();
+      setMessageText('');
     } catch (err) {
       console.log(err);
     }
@@ -63,6 +65,7 @@ function ChatBox({ refetch }) {
           placeholder="Type your message here"
         />
         <button onClick={handleSendMessage}>Send</button>
+        <button>🔃</button>
       </div>
     </div>
   );

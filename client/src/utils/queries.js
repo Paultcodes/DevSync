@@ -13,7 +13,7 @@ export const GET_ME = gql`
         _id
         groupName
         members
-        tags 
+        tags
       }
       invites {
         _id 
@@ -130,6 +130,8 @@ export const SEARCH_GROUP_BY_TAG = gql`
   searchGroupByTag(tags: $tags) {
     _id 
     groupName
+    members 
+    tags
   }
  }
 

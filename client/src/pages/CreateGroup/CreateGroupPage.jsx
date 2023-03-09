@@ -66,6 +66,8 @@ const CreateGroupPage = () => {
     setResponseMessage(true);
   };
 
+  if (loading) return <h1>loading...</h1>;
+
   return (
     <form className="create-form">
       <h1>Create Group</h1>
@@ -117,7 +119,7 @@ const CreateGroupPage = () => {
                     ? 'members'
                     : 'member'}
                 </p>
-                <div className='tag-section'>
+                <div className="tag-section">
                   {group.tags.map((tag) => {
                     return <p>{tag}</p>;
                   })}

@@ -50,7 +50,7 @@ const resolvers = {
     },
 
     searchGroupByTag: async (parent, { tags }, context) => {
-      const query = { tags: { $in: tags } };
+      const query = { tags: { $in: tags }, type: "open" };
     
       try {
         const groups = await Group.find(query).exec();

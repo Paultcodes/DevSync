@@ -71,6 +71,13 @@ const typeDefs = gql`
     type: String
   }
 
+  type TagGroup {
+    _id: ID 
+    groupName: String 
+    tags: [String]!
+    members: [ID]!
+  }
+
   
 
   
@@ -108,7 +115,7 @@ const typeDefs = gql`
     searchUser(username: String!): User 
     getGroup(groupId: ID!): Group!
     getHelpWantedAds: [HelpWanted]
-    searchGroupByTag(tags: [String!]!): [Group]! 
+    searchGroupByTag(tags: [String!]!): [TagGroup]! 
   }
 
   type Mutation {

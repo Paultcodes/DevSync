@@ -10,6 +10,7 @@ import {
   SEARCH_GROUP_BY_TAG,
 } from '../../utils/queries';
 import GroupCard from '../../components/GroupCard/GroupCard';
+import { Link } from 'react-router-dom';
 
 const options = [
   { label: 'JavaScript', value: 'javascript' },
@@ -145,7 +146,23 @@ const SearchGroupsPage = () => {
               {searchTag &&
                 tData.length > 0 &&
                 tData.map((group) => {
-                  return <p>{group.groupName}</p>;
+                  return (
+                    <Link to={`/group/${group._id}`}>
+                      <h2>{group.groupName}</h2>
+                      <p>
+                        {group.members.length}{' '}
+                        {group.members.length > 1 || group.members.length === 0
+                          ? 'members'
+                          : 'member'}
+                      </p>
+                      <div className='tag-section-card'>
+                        {group.tags.map((tag) => {
+                          return <p>{tag}</p>
+                        })}
+
+                      </div>
+                    </Link>
+                  );
                 })}
             </div>
           </div>

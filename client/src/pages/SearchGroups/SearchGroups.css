@@ -21,3 +21,10 @@
   flex-direction: row;
   gap: 1rem;
 }
+
+.tag-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
