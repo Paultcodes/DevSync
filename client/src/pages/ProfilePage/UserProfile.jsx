@@ -14,7 +14,6 @@ const UserProfile = () => {
 
   const profileData = data?.getProfile || {};
 
-  console.log(profileData);
   useEffect(() => {
     if (profileData) {
       setPicSource(pics[profileData.firstName?.charAt(0).toLowerCase()]);

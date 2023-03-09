@@ -7,7 +7,6 @@ const Test = () => {
 
   const allUser = data?.getAllUsers || [];
 
-  console.log(allUser);
   return (
     <div>
       {allUser.map((data) => {

@@ -41,10 +41,6 @@ const SearchGroupsPage = () => {
 
   const ads = adData?.getHelpWantedAds;
 
-  
-  console.log(ads);
-
-  console.log(group);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -52,7 +48,6 @@ const SearchGroupsPage = () => {
 
   const handleClick = (e) => {
     setSearchType(e.target.name);
-    console.log(searchType);
   };
   return (
     <div className="search-group-page">

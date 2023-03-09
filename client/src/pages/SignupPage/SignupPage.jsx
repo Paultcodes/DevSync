@@ -22,14 +22,12 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
 
 
     try {
       const { data } = await createUser({
         variables: { ...formData },
       });
-      console.log(data.createUser);
       auth.login(data.createUser.token);
     } catch (err) {
       console.log(err);
@@ -41,7 +39,6 @@ const SignupPage = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    console.log(formData);
   };
   return (
     <div className="signup-form">

@@ -9,7 +9,6 @@ import auth from '../../utils/auth';
 
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_GROUP } from '../../utils/mutations';
-import { Redirect } from 'react-router-dom';
 import { GET_ME } from '../../utils/queries';
 
 const CreateGroupPage = () => {
@@ -17,7 +16,6 @@ const CreateGroupPage = () => {
   const [createGroup, { data: createData, error }] = useMutation(CREATE_GROUP);
   const [groupType, setGroupType] = useState('open');
   const userData = data?.me.ownedGroups || [];
-  console.log(userData);
 
   const [groupForm, setGroupForm] = useState({
     groupName: '',

@@ -16,7 +16,6 @@ const ProfilePage = () => {
     useMutation(INVITE_RESPONSE);
 
   const handleResponse = async (groupId, inviteId, response) => {
-    console.log(groupId + inviteId + response)
     const token = auth.loggedIn() ? auth.getToken() : null;
 
     if (!token) {
@@ -40,7 +39,6 @@ const ProfilePage = () => {
     }
   }, [userData]);
 
-  console.log(userData);
 
   if (loading) {
     return <h1>Loading...</h1>;

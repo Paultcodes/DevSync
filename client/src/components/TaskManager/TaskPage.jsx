@@ -6,7 +6,6 @@ import { useContext } from 'react';
 
 const TaskPage = ({refetch}) => {
   const tasks = useContext(GroupDataContext);
-  console.log(tasks.tasks);
   return (
     <div className="task-page-section">
       <div className="form-section">

@@ -5,11 +5,9 @@ import './mygroupspage.css';
 
 const MyGroupsPage = () => {
   const { loading, data } = useQuery(GET_ME);
-  console.log(data);
 
   const userData = data?.me || [];
 
-  console.log(userData);
   if (loading) {
     return <h1>Loading...</h1>;
   }

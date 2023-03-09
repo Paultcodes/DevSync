@@ -40,7 +40,7 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    console.log(helpWantedForm);
+    
   };
 
   const handleInvite = async (userId) => {
@@ -62,8 +62,6 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(helpWantedForm);
-    console.log(groupId);
 
     const token = auth.loggedIn() ? auth.getToken() : null;
 

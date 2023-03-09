@@ -21,15 +21,12 @@ const TaskForm = ({ refetch }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(task)
-    console.log(groupId)
 
     try {
       const {data} = createTask({
         variables: {...task, groupId}
       })
       refetch()
-      console.log(data)
     } catch (error) {
       console.log(error)
     }

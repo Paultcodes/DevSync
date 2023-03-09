@@ -11,14 +11,12 @@ const resolvers = {
           { path: 'ownedGroups' },
           { path: 'invites.group' },
         ]);
-        console.log(user.invites);
         return user;
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
     getProfile: async (parent, { userId }) => {
-      console.log(userId);
 
       return await User.findOne({ _id: userId });
     },
@@ -78,7 +76,6 @@ const resolvers = {
       parent,
       { username, email, password, firstName, lastName }
     ) => {
-      console.log('asdfasdf');
       const user = await User.create({
         username,
         email,
@@ -151,7 +148,6 @@ const resolvers = {
     },
 
     addTagsToUser: async (_, { tag }, context) => {
-      console.log(tag);
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -248,7 +244,6 @@ const resolvers = {
       { assignee, description, type, groupId },
       context
     ) => {
-      console.log(assignee);
       if (context.user) {
         const updateGroup = await Group.findOneAndUpdate(
           { _id: groupId },
