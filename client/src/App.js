@@ -26,7 +26,7 @@ import ProfileSettings from './pages/ProfileSettings/ProfileSettings';
 // Construct our main GraphQL API endpoint
 //test
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'https://aqueous-island-09635.herokuapp.com/graphql',
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
@@ -47,6 +47,8 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
+
+// uri: 'https://aqueous-island-09635.herokuapp.com/graphql',
 
 function App() {
   return (
