@@ -51,7 +51,7 @@ const HomePage = () => {
               </a>
             </h3>
           ) : (
-            <h2>Join for free today and connecting with other developer</h2>
+            <h2>Join for free today and start connecting with other developers</h2>
           )}
         </div>
       </div>

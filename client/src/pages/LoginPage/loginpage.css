@@ -9,7 +9,7 @@
 
   inset: 0;
   border-radius: 10px;
-  background-image: url('../../images/alphabet/Fotor_AI\ \(5\).png');
+  background-image: url('../../images/alphabet/backgroundOne.png');
 }
 .login-inputs {
   display: flex;

@@ -65,7 +65,7 @@ function ChatBox({ refetch }) {
           placeholder="Type your message here"
         />
         <button onClick={handleSendMessage}>Send</button>
-        <button>🔃</button>
+        <button onClick={(() => refetch())}>🔃</button>
       </div>
     </div>
   );

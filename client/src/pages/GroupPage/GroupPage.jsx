@@ -30,7 +30,7 @@ const GroupPage = () => {
       const { data } = addMember({
         variables: { groupId: groupId },
       });
-      window.location.reload()
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -43,12 +43,22 @@ const GroupPage = () => {
     return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
   }
 
-
   if (!groupData.isMember) {
     return (
-      <div>
+      <div className="join">
         <h1>Would You like to join this group? </h1>
         <ButtonOne buttonName="Join" onClick={handleAddMember} />
+        <p>
+          {groupData.members.length}{' '}
+          {groupData.members.length > 1 || groupData.members.length === 0
+            ? 'members'
+            : 'member'}
+        </p>
+        <div>
+          {groupData.tags.map((tag) => {
+            return <p>{tag}</p>;
+          })}
+        </div>
       </div>
     );
   }
@@ -63,13 +73,16 @@ const GroupPage = () => {
         </div>
         <div className="content-section">
           {currentSection === 'chat' ? (
-            <GroupChat refetch={refetch}/>
+            <GroupChat refetch={refetch} />
           ) : currentSection === 'tasks' ? (
             <TaskPage refetch={refetch} />
           ) : currentSection === 'members' ? (
-            <MemberSection groupMembers={groupData.members} groupOwner={groupData.isGroupOwner}/>
+            <MemberSection
+              groupMembers={groupData.members}
+              groupOwner={groupData.isGroupOwner}
+            />
           ) : (
-            <GroupSettings refetch={refetch}/>
+            <GroupSettings refetch={refetch} />
           )}
         </div>
       </div>

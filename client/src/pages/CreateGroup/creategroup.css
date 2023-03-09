@@ -35,6 +35,6 @@
 
 .tag-section {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 2rem;
 }

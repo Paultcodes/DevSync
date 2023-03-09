@@ -95,7 +95,7 @@ export const GET_GROUP = gql`
       }
       isMember
       isGroupOwner
-      chatMessages {
+      chatMessages {     
         messageText 
         from 
         timestamp

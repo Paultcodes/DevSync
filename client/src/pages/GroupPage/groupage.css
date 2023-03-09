@@ -13,7 +13,7 @@
   z-index: -1;
   inset: 0;
   opacity: 60%;
-  background-image: url('../../images/alphabet/Fotor_AI\ \(5\).png');
+  background-image: url('../../images/alphabet/backgroundOne.png');
 }
 
 
@@ -22,6 +22,11 @@
     justify-content: center;
     align-items: center;
   
+}
+
+.join {
+  margin-top: 10%;
+  text-align: center;
 }
 
 
