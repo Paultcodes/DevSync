@@ -41,7 +41,15 @@ const HomePage = () => {
         </div>
         <div>
           {auth.loggedIn() ? (
-            <h3>Read about whats new with DevSync</h3>
+            <h3>
+              Read about whats new with{' '}
+              <a
+                style={{ color: 'blue' }}
+                href="https://github.com/Paultcodes/DevSync"
+              >
+                DevSync
+              </a>
+            </h3>
           ) : (
             <h2>Join for free today and connecting with other developer</h2>
           )}
