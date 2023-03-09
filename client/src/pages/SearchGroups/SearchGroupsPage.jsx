@@ -147,7 +147,7 @@ const SearchGroupsPage = () => {
                 tData.length > 0 &&
                 tData.map((group) => {
                   return (
-                    <Link to={`/group/${group._id}`}>
+                    <Link className='group-card-link' to={`/group/${group._id}`}>
                       <h2>{group.groupName}</h2>
                       <p>
                         {group.members.length}{' '}

@@ -28,3 +28,21 @@
   justify-content: center;
   align-items: center;
 }
+
+.group-card-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: aliceblue;
+  width: 300px;
+  border-radius: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.tag-section-card {
+  display: flex;
+  gap: 1rem;
+
+}
