@@ -123,3 +123,13 @@ export const GET_HELP_WANTED_ADS = gql`
         }
 `
 ;
+
+export const SEARCH_GROUP_BY_TAG = gql`
+ query searchGroupByTag($tags: [String!]!) {
+  searchGroupByTag(tags: $tags) {
+    _id 
+    groupName
+  }
+ }
+
+`

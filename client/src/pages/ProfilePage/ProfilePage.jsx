@@ -10,7 +10,7 @@ import { INVITE_RESPONSE } from '../../utils/mutations';
 import auth from '../../utils/auth';
 
 const ProfilePage = () => {
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data, refetch } = useQuery(GET_ME);
   const [picSource, setPicSource] = useState('');
   const [inviteResponse, { error, data: responseData }] =
     useMutation(INVITE_RESPONSE);
@@ -26,6 +26,7 @@ const ProfilePage = () => {
       const { data } = inviteResponse({
         variables: { groupId, inviteId, response },
       });
+      refetch()
     } catch (err) {
       console.log(err);
     }
@@ -73,6 +74,7 @@ const ProfilePage = () => {
       </div>
 
       <div className="middle-section section">
+        {userData.invites.length === 0 && <p>No invites</p>}
         {userData.invites.map((invite) => {
           return (
             <div className="invite-card">

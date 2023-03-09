@@ -49,6 +49,19 @@ const resolvers = {
       return { ...getGroup.toObject(), isMember, isGroupOwner };
     },
 
+    searchGroupByTag: async (parent, { tags }, context) => {
+      const query = { tags: { $in: tags } };
+
+      Group.find(query, function (err, groups) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log(groups)
+          return groups
+        }
+      });
+    },
+
     getAllUsers: async () => {
       return await User.find({});
     },

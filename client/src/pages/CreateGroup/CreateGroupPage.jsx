@@ -15,6 +15,7 @@ const CreateGroupPage = () => {
   const { loading, data, refetch } = useQuery(GET_ME);
   const [createGroup, { data: createData, error }] = useMutation(CREATE_GROUP);
   const [groupType, setGroupType] = useState('open');
+  const [responseMessage, setResponseMessage] = useState(false)
   const userData = data?.me.ownedGroups || [];
 
   const [groupForm, setGroupForm] = useState({
@@ -57,11 +58,17 @@ const CreateGroupPage = () => {
     } catch (err) {
       console.log(err);
     }
+
+    setGroupForm({
+      groupName: '',
+      type: 'open',
+    });
+    setResponseMessage(true)
   };
 
   return (
     <form className="create-form">
-      <h1>Create Your Group</h1>
+      <h1>Create Group</h1>
       <div>
         <div>
           <label>
@@ -89,11 +96,12 @@ const CreateGroupPage = () => {
         </div>
       </div>
       <div className="create-group-input">
-        <h2>{}</h2>
+        {responseMessage && <p>Group Created ✅</p>}
         <InputTwo
           name="groupName"
           onChange={handleChange}
           placeholder="Group name"
+          value={groupForm.groupName}
         />
         <ButtonOne buttonName="Submit" onClick={handleSubmit} />
       </div>

@@ -149,11 +149,13 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
               name="title"
               onChange={handleChange}
               placeholder="Title"
+              value={helpWantedForm.title}
             />
             <TextArea
               name="description"
               onChange={handleChange}
               placeholder="Description"
+              value={helpWantedForm.description}
             />
             <ButtonOne buttonName="Submit" onClick={handleSubmit} />
           </div>
