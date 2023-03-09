@@ -24,6 +24,7 @@ const typeDefs = gql`
     _id: ID 
     groupName: String  
     members:[ID]!
+    tags: [String]!
 
 
   }

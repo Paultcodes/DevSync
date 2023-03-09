@@ -15,7 +15,7 @@ const CreateGroupPage = () => {
   const { loading, data, refetch } = useQuery(GET_ME);
   const [createGroup, { data: createData, error }] = useMutation(CREATE_GROUP);
   const [groupType, setGroupType] = useState('open');
-  const [responseMessage, setResponseMessage] = useState(false)
+  const [responseMessage, setResponseMessage] = useState(false);
   const userData = data?.me.ownedGroups || [];
 
   const [groupForm, setGroupForm] = useState({
@@ -63,7 +63,7 @@ const CreateGroupPage = () => {
       groupName: '',
       type: 'open',
     });
-    setResponseMessage(true)
+    setResponseMessage(true);
   };
 
   return (
@@ -110,13 +110,18 @@ const CreateGroupPage = () => {
           userData.map((group) => {
             return (
               <Link className="group-card" to={`/group/${group._id}`}>
-                <p>{group.groupName}</p>
+                <h2>{group.groupName}</h2>
                 <p>
                   {group.members.length}{' '}
                   {group.members.length > 1 || group.members.length === 0
                     ? 'members'
                     : 'member'}
                 </p>
+                <div className='tag-section'>
+                  {group.tags.map((tag) => {
+                    return <p>{tag}</p>;
+                  })}
+                </div>
               </Link>
             );
           })
