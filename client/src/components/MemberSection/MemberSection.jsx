@@ -1,4 +1,4 @@
-import UserCard from "../UserCards/UseCard";
+import UserCard from "../UserCards/UserCard";
 import { ButtonOne, ButtonFour } from "../buttons/Buttons";
 import "./membersection.css";
 import { useState } from "react";
@@ -76,8 +76,6 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
       console.log(err);
     }
   };
-
-  const [searchType, setSearchType] = useState(null);
 
   const [searched, setSearched] = useState(false);
 

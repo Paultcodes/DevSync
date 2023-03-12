@@ -85,10 +85,12 @@ const CreateGroupPage = () => {
   return (
     <form className="create-form">
       <h1>Create Group</h1>
+
       <div>
         {AccessLvl("open")}
         {AccessLvl("private")}
       </div>
+
       <div className="create-group-input">
         {responseMessage && <p>Group Created ✅</p>}
         <InputTwo
@@ -99,20 +101,21 @@ const CreateGroupPage = () => {
         />
         <ButtonOne buttonName="Submit" onClick={handleSubmit} />
       </div>
+
       <div className="card-section">
         {userData ? (
-          userData.map((group) => {
+          userData.map(({ _id, groupName, members, tags }) => {
             return (
-              <Link className="group-card" to={`/group/${group._id}`}>
-                <h2>{group.groupName}</h2>
+              <Link className="group-card" to={`/group/${_id}`}>
+                <h2>{groupName}</h2>
                 <p>
-                  {group.members.length}{" "}
-                  {group.members.length > 1 || group.members.length === 0
+                  {members.length}{" "}
+                  {members.length > 1 || members.length === 0
                     ? "members"
                     : "member"}
                 </p>
                 <div className="tag-section">
-                  {group.tags.map((tag) => {
+                  {tags.map((tag) => {
                     return <p>{tag}</p>;
                   })}
                 </div>
