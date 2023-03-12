@@ -44,15 +44,13 @@ const GroupPage = () => {
   }
 
   if (!groupData.isMember) {
+    const memLength = groupData.members.length;
     return (
       <div className="join">
         <h1>Would You like to join this group? </h1>
         <ButtonOne buttonName="Join" onClick={handleAddMember} />
         <p>
-          {groupData.members.length}{" "}
-          {groupData.members.length > 1 || groupData.members.length === 0
-            ? "members"
-            : "member"}
+          {memLength} {memLength > 1 || memLength === 0 ? "members" : "member"}
         </p>
         <div>
           {groupData.tags.map((tag) => {
@@ -71,6 +69,7 @@ const GroupPage = () => {
             setCurrentSection={setCurrentSection}
           />
         </div>
+
         <div className="content-section">
           {currentSection === "chat" ? (
             <GroupChat refetch={refetch} />
@@ -86,7 +85,6 @@ const GroupPage = () => {
           )}
         </div>
       </div>
-      <div></div>
     </GroupDataContext.Provider>
   );
 };
