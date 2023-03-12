@@ -1,17 +1,17 @@
-import './profilepage.css';
-import { pics } from './pics';
-import { useQuery } from '@apollo/client';
-import { GET_ME } from '../../utils/queries';
-import { useEffect, useState } from 'react';
-import { FaCog } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { INVITE_RESPONSE } from '../../utils/mutations';
-import auth from '../../utils/auth';
+import "./profilepage.css";
+import { pics } from "./pics";
+import { useQuery } from "@apollo/client";
+import { GET_ME } from "../../utils/queries";
+import { useEffect, useState, useMemo } from "react";
+import { FaCog } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { INVITE_RESPONSE } from "../../utils/mutations";
+import auth from "../../utils/auth";
 
 const ProfilePage = () => {
   const { loading, data, refetch } = useQuery(GET_ME);
-  const [picSource, setPicSource] = useState('');
+  const [picSource, setPicSource] = useState("");
   const [inviteResponse, { error, data: responseData }] =
     useMutation(INVITE_RESPONSE);
 
@@ -23,23 +23,22 @@ const ProfilePage = () => {
     }
 
     try {
-      const { data } = inviteResponse({
-        variables: { groupId, inviteId, response },
+      await inviteResponse({
+        variables: { groupId, inviteId, response }
       });
-      refetch()
+      refetch();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const userData = data?.me || {};
+  const userData = useMemo(() => data?.me || {}, [data]);
 
   useEffect(() => {
     if (userData) {
       setPicSource(pics[userData.firstName?.charAt(0).toLowerCase()]);
     }
   }, [userData]);
-
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -82,14 +81,14 @@ const ProfilePage = () => {
               <div className="invite-buttons">
                 <button
                   onClick={() =>
-                    handleResponse(invite.group._id, invite._id, 'accept')
+                    handleResponse(invite.group._id, invite._id, "accept")
                   }
                 >
                   ✅
                 </button>
                 <button
                   onClick={() =>
-                    handleResponse(invite.group._id, invite._id, 'decline')
+                    handleResponse(invite.group._id, invite._id, "decline")
                   }
                 >
                   ❌

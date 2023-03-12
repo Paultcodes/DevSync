@@ -1,7 +1,7 @@
-import { useQuery } from '@apollo/client';
-import { Link } from 'react-router-dom';
-import { GET_ME } from '../../utils/queries';
-import './mygroupspage.css';
+import { useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { GET_ME } from "../../utils/queries";
+import "./mygroupspage.css";
 
 const MyGroupsPage = () => {
   const { loading, data } = useQuery(GET_ME);
@@ -23,17 +23,6 @@ const MyGroupsPage = () => {
             </Link>
           );
         })}
-      </div>
-      <div className="membergroups">
-        <h1>Groups I am in </h1>
-
-        {/* {userData.groupsAsMember.map((data) => {
-          return (
-            <Link to={`/group/${data._id}`}>
-              <h1>{data.groupName}</h1>
-            </Link>
-          );
-        })} */}
       </div>
     </div>
   );

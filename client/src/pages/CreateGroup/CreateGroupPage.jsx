@@ -1,26 +1,25 @@
-import { useState } from 'react';
-import { InputOne, InputTwo } from '../../components/inputs/Inputs';
-import { ButtonOne } from '../../components/buttons/Buttons';
-import HomeCard from '../../components/HomeCards/HomeCard';
-import { Link } from 'react-router-dom';
-import './creategroup.css';
+import { useState } from "react";
+import { InputTwo } from "../../components/inputs/Inputs";
+import { ButtonOne } from "../../components/buttons/Buttons";
+import { Link } from "react-router-dom";
+import "./creategroup.css";
 
-import auth from '../../utils/auth';
+import auth from "../../utils/auth";
 
-import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_GROUP } from '../../utils/mutations';
-import { GET_ME } from '../../utils/queries';
+import { useMutation, useQuery } from "@apollo/client";
+import { CREATE_GROUP } from "../../utils/mutations";
+import { GET_ME } from "../../utils/queries";
 
 const CreateGroupPage = () => {
   const { loading, data, refetch } = useQuery(GET_ME);
-  const [createGroup, { data: createData, error }] = useMutation(CREATE_GROUP);
-  const [groupType, setGroupType] = useState('open');
+  const [createGroup] = useMutation(CREATE_GROUP);
+  const [groupType, setGroupType] = useState("open");
   const [responseMessage, setResponseMessage] = useState(false);
   const userData = data?.me.ownedGroups || [];
 
   const [groupForm, setGroupForm] = useState({
-    groupName: '',
-    type: 'open',
+    groupName: "",
+    type: "open"
   });
 
   const handleRadioChange = (event) => {
@@ -28,14 +27,14 @@ const CreateGroupPage = () => {
 
     setGroupForm((prevState) => ({
       ...prevState,
-      type: event.target.value,
+      type: event.target.value
     }));
   };
 
   const handleChange = (e) => {
     setGroupForm((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -50,7 +49,7 @@ const CreateGroupPage = () => {
 
     try {
       const { data } = await createGroup({
-        variables: { ...groupForm },
+        variables: { ...groupForm }
       });
       if (data) {
         refetch();
@@ -60,42 +59,35 @@ const CreateGroupPage = () => {
     }
 
     setGroupForm({
-      groupName: '',
-      type: 'open',
+      groupName: "",
+      type: "open"
     });
     setResponseMessage(true);
   };
 
   if (loading) return <h1>loading...</h1>;
 
+  const AccessLvl = (lvl) => (
+    <div>
+      <label>
+        <input
+          type="radio"
+          name="groupType"
+          value={lvl}
+          checked={groupType === lvl}
+          onChange={handleRadioChange}
+        />
+        {lvl.toUpperCase()}
+      </label>
+    </div>
+  );
+
   return (
     <form className="create-form">
       <h1>Create Group</h1>
       <div>
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="groupType"
-              value="open"
-              checked={groupType === 'open'}
-              onChange={handleRadioChange}
-            />
-            Open Group
-          </label>
-        </div>
-        <div>
-          <label>
-            <input
-              type="radio"
-              name="groupType"
-              value="private"
-              checked={groupType === 'private'}
-              onChange={handleRadioChange}
-            />
-            Private Group
-          </label>
-        </div>
+        {AccessLvl("open")}
+        {AccessLvl("private")}
       </div>
       <div className="create-group-input">
         {responseMessage && <p>Group Created ✅</p>}
@@ -114,10 +106,10 @@ const CreateGroupPage = () => {
               <Link className="group-card" to={`/group/${group._id}`}>
                 <h2>{group.groupName}</h2>
                 <p>
-                  {group.members.length}{' '}
+                  {group.members.length}{" "}
                   {group.members.length > 1 || group.members.length === 0
-                    ? 'members'
-                    : 'member'}
+                    ? "members"
+                    : "member"}
                 </p>
                 <div className="tag-section">
                   {group.tags.map((tag) => {

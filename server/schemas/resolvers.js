@@ -1,39 +1,39 @@
-const { User, Group, HelpWanted } = require('../models');
-const { signToken } = require('../utils/auth');
-const { errorMessage } = require('./ErrorMessages');
-const { AuthenticationError } = require('apollo-server-express');
+const { User, Group, HelpWanted } = require("../models");
+const { signToken } = require("../utils/auth");
+const { errorMessage } = require("./ErrorMessages");
+const { AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
-    me: async (parent, args, context) => {
+    me: async (_, _, context) => {
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id }).populate([
-          { path: 'ownedGroups' },
-          { path: 'invites.group' },
+          { path: "ownedGroups" },
+          { path: "invites.group" }
         ]);
         return user;
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getProfile: async (parent, { userId }) => {
+    getProfile: async (_, { userId }) => {
       return await User.findOne({ _id: userId });
     },
 
-    getAllOpenGroups: async (parent, args, context) => {
+    getAllOpenGroups: async (_, _, context) => {
       if (context.user) {
-        return await Group.find({ type: 'open' });
+        return await Group.find({ type: "open" });
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    getGroup: async (parent, { groupId }, context) => {
+    getGroup: async (_, { groupId }, context) => {
       const getGroup = await Group.findOne({ _id: groupId }).populate(
-        'members'
+        "members"
       );
 
       if (!getGroup) {
-        throw new Error('Group not found');
+        throw new Error("Group not found");
       }
 
       const user = await User.findOne({ _id: context.user._id });
@@ -49,16 +49,16 @@ const resolvers = {
       return { ...getGroup.toObject(), isMember, isGroupOwner };
     },
 
-    searchGroupByTag: async (parent, { tags }, context) => {
+    searchGroupByTag: async (_, { tags }, _) => {
       const query = { tags: { $in: tags }, type: "open" };
-    
+
       try {
         const groups = await Group.find(query).exec();
         console.log(groups);
         return groups;
       } catch (error) {
         console.log(error);
-        throw new Error('Failed to search for groups');
+        throw new Error("Failed to search for groups");
       }
     },
 
@@ -67,27 +67,27 @@ const resolvers = {
     },
 
     getHelpWantedAds: async () => {
-      return await HelpWanted.find({}).populate('group');
+      return await HelpWanted.find({}).populate("group");
     },
 
-    searchGroupName: async (parent, { groupName }, context) => {
+    searchGroupName: async (_, { groupName }, context) => {
       if (context.user) {
-        return await Group.findOne({ groupName: groupName, type: 'open' });
+        return await Group.findOne({ groupName: groupName, type: "open" });
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    searchUser: async (parent, { username }, context) => {
+    searchUser: async (_, { username }, context) => {
       if (context.user) {
         return await User.findOne({ username: username });
       }
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
-    },
+    }
   },
 
   Mutation: {
     createUser: async (
-      parent,
+      _,
       { username, email, password, firstName, lastName }
     ) => {
       const user = await User.create({
@@ -95,7 +95,7 @@ const resolvers = {
         email,
         password,
         firstName,
-        lastName,
+        lastName
       });
 
       const token = signToken(user);
@@ -103,7 +103,7 @@ const resolvers = {
       return { token, user };
     },
 
-    login: async (parent, { username, password }) => {
+    login: async (_, { username, password }) => {
       const user = await User.findOne({ username });
 
       if (!user) {
@@ -120,12 +120,12 @@ const resolvers = {
       return { token, user };
     },
 
-    createGroup: async (parent, { groupName, type }, context) => {
+    createGroup: async (_, { groupName, type }, context) => {
       if (context.user) {
         const newGroup = await Group.create({
           groupName,
           type,
-          owner: context.user._id,
+          owner: context.user._id
         });
 
         if (newGroup) {
@@ -139,8 +139,8 @@ const resolvers = {
             {
               $push: {
                 ownedGroups: newGroup._id,
-                groupsAsMember: newGroup._id,
-              },
+                groupsAsMember: newGroup._id
+              }
             },
             { new: true }
           );
@@ -152,7 +152,7 @@ const resolvers = {
       throw new AuthenticationError(errorMessage.needToBeLoggedIn);
     },
 
-    updateUsername: async (parent, { username }, context) => {
+    updateUsername: async (_, { username }, context) => {
       if (context.user) {
         return await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -170,11 +170,7 @@ const resolvers = {
       }
     },
 
-    createHelpWanted: async (
-      parent,
-      { groupId, title, description },
-      context
-    ) => {
+    createHelpWanted: async (_, { groupId, title, description }, context) => {
       if (context.user) {
         return await HelpWanted.create({ group: groupId, title, description });
       }
@@ -189,7 +185,7 @@ const resolvers = {
         );
 
         if (isMember) {
-          throw new Error('User is already a member of this group');
+          throw new Error("User is already a member of this group");
         } else {
           const updatedUser = await User.findOneAndUpdate(
             { _id: userId },
@@ -201,7 +197,7 @@ const resolvers = {
       }
     },
 
-    createMessage: async (parent, { messageText, groupId }, context) => {
+    createMessage: async (_, { messageText, groupId }, context) => {
       if (context.user) {
         const updatedGroup = await Group.findOneAndUpdate(
           { _id: groupId },
@@ -209,9 +205,9 @@ const resolvers = {
             $push: {
               chatMessages: {
                 messageText: messageText,
-                from: context.user.username,
-              },
-            },
+                from: context.user.username
+              }
+            }
           },
           { new: true }
         );
@@ -219,13 +215,9 @@ const resolvers = {
       }
     },
 
-    inviteResponse: async (
-      parent,
-      { response, groupId, inviteId },
-      context
-    ) => {
+    inviteResponse: async (_, { response, groupId, inviteId }, context) => {
       if (context.user) {
-        if (response === 'accept') {
+        if (response === "accept") {
           await Group.findOneAndUpdate(
             { _id: groupId },
             { $push: { members: context.user._id } },
@@ -236,7 +228,7 @@ const resolvers = {
             { _id: context.user._id },
             {
               $pull: { invites: { _id: inviteId } },
-              $push: { groupsAsMember: groupId },
+              $push: { groupsAsMember: groupId }
             },
             { new: true }
           );
@@ -254,7 +246,7 @@ const resolvers = {
     },
 
     createTask: async (
-      parent,
+      _,
       { assignee, description, type, groupId },
       context
     ) => {
@@ -266,9 +258,9 @@ const resolvers = {
               tasks: {
                 assignee: assignee,
                 description: description,
-                type: type,
-              },
-            },
+                type: type
+              }
+            }
           },
           { new: true }
         );
@@ -276,7 +268,7 @@ const resolvers = {
       }
     },
 
-    addMember: async (parent, { groupId }, context) => {
+    addMember: async (_, { groupId }, context) => {
       if (context.user) {
         await Group.findOneAndUpdate(
           { _id: groupId },
@@ -304,8 +296,8 @@ const resolvers = {
       } catch (error) {
         console.log(error);
       }
-    },
-  },
+    }
+  }
 };
 
 module.exports = resolvers;

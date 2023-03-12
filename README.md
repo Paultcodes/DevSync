@@ -10,17 +10,17 @@ DevSync also comes with a range of features to make project management easier. Y
 
 DevSync is perfect for developers who want to collaborate on projects and build their portfolios. Whether you're a seasoned developer or just starting, DevSync has everything you need to start collaborating and building great projects.
 
-# Technology 
+# Technology
 
 1. React
 2. Apollo/GraphQL
-3 MongoDB/Mongoose
+3. MongoDB/Mongoose
 4. JWT
 5. Deployed to Heroku
 
-## Installation 
+## Installation
 
-To install this project, please follow these steps: 
+To install this project, please follow these steps:
 
 1. Clone this repository to your local machine.
 2. Navigate to the project directory in your terminal.
@@ -28,9 +28,7 @@ To install this project, please follow these steps:
 4. Run npm start to start the development server.
 5. Open `http://localhost:3000` in your web browser to view the application.
 
-
-
-
 # Demo
+
 Here is the link to the deployed application on Heroku. https://aqueous-island-09635.herokuapp.com/#/
 <img width="952" alt="screenshot devsync" src="https://user-images.githubusercontent.com/107820740/224182061-5c0de234-4c55-4eb4-83a5-3b80277bb767.png">

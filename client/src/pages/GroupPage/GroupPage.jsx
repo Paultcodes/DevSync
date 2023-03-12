@@ -1,34 +1,34 @@
-import './groupage.css';
+import "./groupage.css";
 // import Navbar from './GroupNavbar/navbar';
-import Navbar from '../../components/GroupNavbar/navbar';
-import GroupChat from '../../components/GroupChat/GroupChat';
+import Navbar from "../../components/GroupNavbar/navbar";
+import GroupChat from "../../components/GroupChat/GroupChat";
 // import TaskPage from './TaskManager/TaskPage';
-import TaskPage from '../../components/TaskManager/TaskPage';
-import MemberSection from '../../components/MemberSection/MemberSection';
-import GroupSettings from '../../components/GroupSettings/GroupSettings';
-import { createContext, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
-import { GET_GROUP } from '../../utils/queries';
-import { ADD_MEMBER } from '../../utils/mutations';
-import { ButtonOne } from '../../components/buttons/Buttons';
+import TaskPage from "../../components/TaskManager/TaskPage";
+import MemberSection from "../../components/MemberSection/MemberSection";
+import GroupSettings from "../../components/GroupSettings/GroupSettings";
+import { createContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_GROUP } from "../../utils/queries";
+import { ADD_MEMBER } from "../../utils/mutations";
+import { ButtonOne } from "../../components/buttons/Buttons";
 
 export const GroupDataContext = createContext();
 
 const GroupPage = () => {
   const [addMember, { data: addMemberData, error: addMemberError }] =
     useMutation(ADD_MEMBER);
-  const [currentSection, setCurrentSection] = useState('chat');
+  const [currentSection, setCurrentSection] = useState("chat");
   const { groupId } = useParams();
 
   const { loading, data, error, refetch } = useQuery(GET_GROUP, {
-    variables: { groupId: groupId },
+    variables: { groupId: groupId }
   });
 
   const handleAddMember = async () => {
     try {
-      const { data } = addMember({
-        variables: { groupId: groupId },
+      await addMember({
+        variables: { groupId: groupId }
       });
       window.location.reload();
     } catch (err) {
@@ -40,7 +40,7 @@ const GroupPage = () => {
   console.log(error);
 
   if (loading) {
-    return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
+    return <h1 style={{ textAlign: "center" }}>Loading</h1>;
   }
 
   if (!groupData.isMember) {
@@ -49,10 +49,10 @@ const GroupPage = () => {
         <h1>Would You like to join this group? </h1>
         <ButtonOne buttonName="Join" onClick={handleAddMember} />
         <p>
-          {groupData.members.length}{' '}
+          {groupData.members.length}{" "}
           {groupData.members.length > 1 || groupData.members.length === 0
-            ? 'members'
-            : 'member'}
+            ? "members"
+            : "member"}
         </p>
         <div>
           {groupData.tags.map((tag) => {
@@ -72,11 +72,11 @@ const GroupPage = () => {
           />
         </div>
         <div className="content-section">
-          {currentSection === 'chat' ? (
+          {currentSection === "chat" ? (
             <GroupChat refetch={refetch} />
-          ) : currentSection === 'tasks' ? (
+          ) : currentSection === "tasks" ? (
             <TaskPage refetch={refetch} />
-          ) : currentSection === 'members' ? (
+          ) : currentSection === "members" ? (
             <MemberSection
               groupMembers={groupData.members}
               groupOwner={groupData.isGroupOwner}

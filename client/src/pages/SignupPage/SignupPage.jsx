@@ -1,32 +1,30 @@
-import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
 
-import './signup.css';
+import "./signup.css";
 
-import { SIGNUP_USER } from '../../utils/mutations';
-import { InputOne, InputTwo, InputThree } from '../../components/inputs/Inputs';
-import { ButtonOne } from '../../components/buttons/Buttons';
+import { SIGNUP_USER } from "../../utils/mutations";
+import { InputTwo } from "../../components/inputs/Inputs";
+import { ButtonOne } from "../../components/buttons/Buttons";
 
-import auth from '../../utils/auth';
+import auth from "../../utils/auth";
 
 const SignupPage = () => {
-  const [createUser, { data, error }] = useMutation(SIGNUP_USER);
+  const [createUser] = useMutation(SIGNUP_USER);
   const [formData, setFormData] = useState({
-    username: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    username: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-
     try {
       const { data } = await createUser({
-        variables: { ...formData },
+        variables: { ...formData }
       });
       auth.login(data.createUser.token);
     } catch (err) {
@@ -37,35 +35,29 @@ const SignupPage = () => {
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
+
   return (
     <div className="signup-form">
       <h1>Sign Up!</h1>
       <div className="signup-inputs">
-      <InputTwo
-          onChange={handleChange}
-          name="firstName"
-          placeholder="First name"
-        />
-         <InputTwo
-          onChange={handleChange}
-          name="lastName"
-          placeholder="Last name"
-        />
-        <InputTwo
-          onChange={handleChange}
-          name="username"
-          placeholder="Username"
-        />
-        <InputTwo onChange={handleChange} name="email" placeholder="Email" />
-        <InputTwo
-        type='password'
-          onChange={handleChange}
-          name="password"
-          placeholder="Password"
-        />
+        {[
+          ["firstName", "First name"],
+          ["lastName", "Last name"],
+          ["username", "Username"],
+          ["email", "Email"],
+          ["password", "password"]
+        ].map(([name, ph]) => (
+          <InputTwo
+            onChange={handleChange}
+            name={name}
+            placeholder={ph}
+            type={name === "password" ? name : ""}
+          />
+        ))}
+        ;
         <ButtonOne onClick={handleSubmit} buttonName="Submit" />
       </div>
     </div>

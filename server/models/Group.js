@@ -1,77 +1,78 @@
-const { Schema, model, default: mongoose } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+const { Schema, model, default: mongoose } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const groupSchema = new Schema(
   {
     groupName: {
       type: String,
-      required: true,
+      required: true
     },
+
     type: {
       type: String,
-      required: true,
+      required: true
     },
 
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User"
     },
 
-    members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 
     chatMessages: [
       {
         messageText: {
-          type: String,
+          type: String
         },
         to: {
-          type: String,
+          type: String
         },
         from: {
-          type: String,
+          type: String
         },
         timestamp: {
           type: Date,
           default: Date.now,
-          get: (timestamp) => dateFormat(timestamp),
-        },
-      },
+          get: (timestamp) => dateFormat(timestamp)
+        }
+      }
     ],
 
     invites: [
       {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        timestamp: { type: Date, default: Date.now },
-      },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        timestamp: { type: Date, default: Date.now }
+      }
     ],
 
     tags: [
       {
-        type: String,
-      },
+        type: String
+      }
     ],
 
     tasks: [
       {
         assignee: {
-          type: String,
+          type: String
         },
         description: {
           type: String
         },
         type: {
-          type: String,
-        },
-      },
-    ],
+          type: String
+        }
+      }
+    ]
   },
   {
     toJSON: {
-      virtuals: true,
-    },
+      virtuals: true
+    }
   }
 );
 
-const Group = model('Group', groupSchema);
+const Group = model("Group", groupSchema);
 
 module.exports = Group;

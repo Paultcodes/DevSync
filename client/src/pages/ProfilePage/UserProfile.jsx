@@ -1,18 +1,18 @@
-import './profilepage.css';
-import { pics } from './pics';
-import { useQuery } from '@apollo/client';
-import { GET_PROFILE } from '../../utils/queries';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import "./profilepage.css";
+import { pics } from "./pics";
+import { useQuery } from "@apollo/client";
+import { GET_PROFILE } from "../../utils/queries";
+import { useParams } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
 
 const UserProfile = () => {
   const { userId } = useParams();
-  const [picSource, setPicSource] = useState('');
+  const [picSource, setPicSource] = useState("");
   const { loading, data } = useQuery(GET_PROFILE, {
-    variables: { userId: userId },
+    variables: { userId: userId }
   });
 
-  const profileData = data?.getProfile || {};
+  const profileData = useMemo(() => data?.getProfile || {}, [data]);
 
   useEffect(() => {
     if (profileData) {
@@ -21,7 +21,7 @@ const UserProfile = () => {
   }, [profileData]);
 
   if (loading) {
-    return <h1 style={{ textAlign: 'center' }}>Loading...</h1>;
+    return <h1 style={{ textAlign: "center" }}>Loading...</h1>;
   }
 
   return (

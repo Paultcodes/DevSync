@@ -1,11 +1,11 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 //! Ask about adding Tasks to group type and chat messages to Group type
 
 const typeDefs = gql`
   type User {
     _id: ID
-    firstName: String 
+    firstName: String
     lastName: String
     username: String
     email: String
@@ -21,12 +21,10 @@ const typeDefs = gql`
   }
 
   type testGroup {
-    _id: ID 
-    groupName: String  
-    members:[ID]!
+    _id: ID
+    groupName: String
+    members: [ID]!
     tags: [String]!
-
-
   }
 
   type userGroups {
@@ -36,33 +34,31 @@ const typeDefs = gql`
 
   type Tags {
     tag: String
-
   }
 
   type Message {
-    messageText: String 
-    from: String 
+    messageText: String
+    from: String
     timestamp: String
   }
 
   type ReceivedInvite {
-    _id: ID 
-    group: Group  
-    status: String 
-
+    _id: ID
+    group: Group
+    status: String
   }
 
   type Invite {
-    group: String 
-    user: User 
+    group: String
+    user: User
     status: String
   }
 
   type HelpWanted {
-    _id: ID 
-    group: Group 
-    title: String 
-    description: String 
+    _id: ID
+    group: Group
+    title: String
+    description: String
   }
 
   type Task {
@@ -72,63 +68,74 @@ const typeDefs = gql`
   }
 
   type TagGroup {
-    _id: ID 
-    groupName: String 
+    _id: ID
+    groupName: String
     tags: [String]!
     members: [ID]!
   }
 
-  
-
-  
-
   type Member {
-    user: User 
+    user: User
   }
 
   type Group {
-    _id: ID 
-    groupName: String 
-    type: String 
-    owner: String 
+    _id: ID
+    groupName: String
+    type: String
+    owner: String
     members: [User]!
     invites: [Invite]!
     tags: [String]!
     tasks: [Task]!
     chatMessages: [Message]!
     isMember: Boolean
-    isGroupOwner: Boolean 
+    isGroupOwner: Boolean
   }
 
   type Auth {
-    token: ID! 
-    user: User 
+    token: ID!
+    user: User
   }
 
   type Query {
-    me: User 
-    getProfile(userId: ID!): User 
-    getAllOpenGroups: Group 
-    getSingleGroup: Group 
+    me: User
+    getProfile(userId: ID!): User
+    getAllOpenGroups: Group
+    getSingleGroup: Group
     getAllUsers: [User]!
     searchGroupName(groupName: String!): Group
-    searchUser(username: String!): User 
+    searchUser(username: String!): User
     getGroup(groupId: ID!): Group!
     getHelpWantedAds: [HelpWanted]
-    searchGroupByTag(tags: [String!]!): [TagGroup]! 
+    searchGroupByTag(tags: [String!]!): [TagGroup]!
   }
 
   type Mutation {
-    createUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth 
-    login(username: String!, password: String!): Auth 
+    createUser(
+      firstName: String!
+      lastName: String!
+      username: String!
+      email: String!
+      password: String!
+    ): Auth
+    login(username: String!, password: String!): Auth
     createGroup(groupName: String!, type: String!): User
-    updateUsername(username: String!): User 
+    updateUsername(username: String!): User
     addTagsToUser(tag: String!): User
-    createTask(assignee: String!, description: String!, type: String!, groupId: ID!): Group 
-    inviteUserToGroup(groupId: ID!, userId: ID!): User 
-    createHelpWanted(groupId: ID!, title: String!, description: String!): HelpWanted
-    createMessage(messageText: String!, groupId: ID!): Group 
-    inviteResponse(response: String!, groupId: ID!, inviteId: ID!): User 
+    createTask(
+      assignee: String!
+      description: String!
+      type: String!
+      groupId: ID!
+    ): Group
+    inviteUserToGroup(groupId: ID!, userId: ID!): User
+    createHelpWanted(
+      groupId: ID!
+      title: String!
+      description: String!
+    ): HelpWanted
+    createMessage(messageText: String!, groupId: ID!): Group
+    inviteResponse(response: String!, groupId: ID!, inviteId: ID!): User
     addMember(groupId: ID!): User
     addTagsToGroup(groupId: ID!, tags: [String!]!): Group!
   }

@@ -1,20 +1,18 @@
-import React from 'react';
-import './ChatBox.css';
-import { useEffect, useRef, useState, useContext } from 'react';
-import { useMutation } from '@apollo/client';
-import { SEND_MESSAGE } from '../../utils/mutations';
-import auth from '../../utils/auth';
-import {} from 'react-icons/fa'
-import { useParams } from 'react-router-dom';
-import { GroupDataContext } from '../../pages/GroupPage/GroupPage';
+import React from "react";
+import "./ChatBox.css";
+import { useEffect, useRef, useState, useContext } from "react";
+import { useMutation } from "@apollo/client";
+import { SEND_MESSAGE } from "../../utils/mutations";
+import auth from "../../utils/auth";
+import {} from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { GroupDataContext } from "../../pages/GroupPage/GroupPage";
 
 function ChatBox({ refetch }) {
   const messages = useContext(GroupDataContext);
   const chatBoxRef = useRef(null);
   const { groupId } = useParams();
-  const [messageText, setMessageText] = useState('');
-
-  const scrollRef = useRef(null);
+  const [messageText, setMessageText] = useState("");
 
   const [createMessage, { error, data }] = useMutation(SEND_MESSAGE);
 
@@ -28,11 +26,11 @@ function ChatBox({ refetch }) {
     }
 
     try {
-      const { data } = await createMessage({
-        variables: { messageText, groupId },
+      await createMessage({
+        variables: { messageText, groupId }
       });
       refetch();
-      setMessageText('');
+      setMessageText("");
     } catch (err) {
       console.log(err);
     }
@@ -51,7 +49,7 @@ function ChatBox({ refetch }) {
       <div className="messages" ref={chatBoxRef}>
         {messages.chatMessages.map(({ messageText, from, timestamp }) => (
           <div key={messageText}>
-            <p style={{ fontWeight: '900' }}>{from}</p>
+            <p style={{ fontWeight: "900" }}>{from}</p>
             <p className="text">{messageText}</p>
             <p className="time">{timestamp}</p>
           </div>
@@ -65,7 +63,7 @@ function ChatBox({ refetch }) {
           placeholder="Type your message here"
         />
         <button onClick={handleSendMessage}>Send</button>
-        <button onClick={(() => refetch())}>🔃</button>
+        <button onClick={() => refetch()}>🔃</button>
       </div>
     </div>
   );

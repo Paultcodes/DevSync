@@ -1,25 +1,25 @@
-import { ButtonThree } from '../../components/buttons/Buttons';
-import './SearchGroups.css';
-import { InputOne } from '../../components/inputs/Inputs';
-import { useState } from 'react';
-import { ButtonOne } from '../../components/buttons/Buttons';
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { ButtonThree } from "../../components/buttons/Buttons";
+import "./SearchGroups.css";
+import { InputOne } from "../../components/inputs/Inputs";
+import { useState } from "react";
+import { ButtonOne } from "../../components/buttons/Buttons";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import {
   SEARCH_GROUP_NAME,
   GET_HELP_WANTED_ADS,
-  SEARCH_GROUP_BY_TAG,
-} from '../../utils/queries';
-import GroupCard from '../../components/GroupCard/GroupCard';
-import { Link } from 'react-router-dom';
+  SEARCH_GROUP_BY_TAG
+} from "../../utils/queries";
+import GroupCard from "../../components/GroupCard/GroupCard";
+import { Link } from "react-router-dom";
 
 const options = [
-  { label: 'JavaScript', value: 'javascript' },
-  { label: 'React', value: 'react' },
-  { label: 'Python', value: 'python' },
-  { label: 'Ecommerce', value: 'ecommerce' },
-  { label: 'MongoDB', value: 'mongodb' },
-  { label: 'MySQL', value: 'mysql' },
-  { label: 'Rust', value: 'rust' },
+  { label: "JavaScript", value: "javascript" },
+  { label: "React", value: "react" },
+  { label: "Python", value: "python" },
+  { label: "Ecommerce", value: "ecommerce" },
+  { label: "MongoDB", value: "mongodb" },
+  { label: "MySQL", value: "mysql" },
+  { label: "Rust", value: "rust" }
 ];
 
 const SearchGroupsPage = () => {
@@ -31,7 +31,7 @@ const SearchGroupsPage = () => {
 
   const [selectedTags, setSelectedTags] = useState([]);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleTagSelect = (event) => {
     const tagValue = event.target.value;
@@ -47,12 +47,12 @@ const SearchGroupsPage = () => {
 
   const [
     searchGroupByTag,
-    { loading: groupTagsLoading, error: tagsError, data: tagsData },
+    { loading: groupTagsLoading, error: tagsError, data: tagsData }
   ] = useLazyQuery(SEARCH_GROUP_BY_TAG);
 
   const [
     getHelpWantedAds,
-    { loading: adLoading, error: adError, data: adData },
+    { loading: adLoading, error: adError, data: adData }
   ] = useLazyQuery(GET_HELP_WANTED_ADS);
 
   const handleSearch = (event) => {
@@ -73,7 +73,7 @@ const SearchGroupsPage = () => {
 
   const searchForHelpWanted = () => {
     getHelpWantedAds();
-    setSearchType('helpWanted');
+    setSearchType("helpWanted");
   };
 
   const group = data?.searchGroupName;
@@ -113,7 +113,7 @@ const SearchGroupsPage = () => {
         />
       </div>
       <div className="search-section">
-        {searchType === 'groupName' ? (
+        {searchType === "groupName" ? (
           <div className="name-search">
             <InputOne
               placeholder="Group Name"
@@ -122,7 +122,7 @@ const SearchGroupsPage = () => {
             />
             <ButtonOne buttonName="Search" onClick={searchForGroup} />
           </div>
-        ) : searchType === 'tags' ? (
+        ) : searchType === "tags" ? (
           <div className="tag-section">
             <h1>Search for group by tags</h1>
             <div>
@@ -147,26 +147,28 @@ const SearchGroupsPage = () => {
                 tData.length > 0 &&
                 tData.map((group) => {
                   return (
-                    <Link className='group-card-link' to={`/group/${group._id}`}>
+                    <Link
+                      className="group-card-link"
+                      to={`/group/${group._id}`}
+                    >
                       <h2>{group.groupName}</h2>
                       <p>
-                        {group.members.length}{' '}
+                        {group.members.length}{" "}
                         {group.members.length > 1 || group.members.length === 0
-                          ? 'members'
-                          : 'member'}
+                          ? "members"
+                          : "member"}
                       </p>
-                      <div className='tag-section-card'>
+                      <div className="tag-section-card">
                         {group.tags.map((tag) => {
-                          return <p>{tag}</p>
+                          return <p>{tag}</p>;
                         })}
-
                       </div>
                     </Link>
                   );
                 })}
             </div>
           </div>
-        ) : searchType === 'helpWanted' ? (
+        ) : searchType === "helpWanted" ? (
           <div className="help-wanted-search">
             {ads.map((ad) => (
               <div key={ad._id}>
