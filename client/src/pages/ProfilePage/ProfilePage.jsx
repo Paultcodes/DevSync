@@ -33,6 +33,7 @@ const ProfilePage = () => {
   };
 
   const userData = useMemo(() => data?.me || {}, [data]);
+  const { firstName, lastName, email, invites, skills } = userData;
 
   useEffect(() => {
     if (userData) {
@@ -57,13 +58,13 @@ const ProfilePage = () => {
         <div className="info-section">
           <h3>Profile</h3>
           <div>
-            <p>{userData.email}</p>
+            <p>{email}</p>
             <p>GitHub</p>
           </div>
         </div>
         <div className="text-align">
           <h1>
-            {userData.firstName} {userData.lastName}
+            {firstName} {lastName}
           </h1>
           <p>Software Engineer</p>
         </div>
@@ -73,8 +74,8 @@ const ProfilePage = () => {
       </div>
 
       <div className="middle-section section">
-        {userData.invites.length === 0 && <p>No invites</p>}
-        {userData.invites.map((invite) => {
+        {invites.length === 0 && <p>No invites</p>}
+        {invites.map((invite) => {
           return (
             <div className="invite-card">
               {invite.group.groupName} has invited you to join their group
@@ -110,8 +111,8 @@ const ProfilePage = () => {
           </p>
         </div>
         <div className="tech-skills">
-          {userData.skills.length > 0 ? (
-            userData.skills.map((data) => {
+          {skills.length > 0 ? (
+            skills.map((data) => {
               return <p className="skill">{data}</p>;
             })
           ) : (

@@ -72,12 +72,4 @@ const UserProfile = () => {
   );
 };
 
-// {profileData.skills.length > 0 ? (
-//   profileData.skills.map((data) => {
-//     return <p className="skill">{data}</p>;
-//   })
-// ) : (
-//   <p>This user has not technical skills listed</p>
-// )}
-
 export default UserProfile;
