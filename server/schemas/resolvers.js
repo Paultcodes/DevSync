@@ -5,7 +5,7 @@ const { AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
-    me: async (_, _, context) => {
+    me: async (_, _args, context) => {
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id }).populate([
           { path: "ownedGroups" },
@@ -20,7 +20,7 @@ const resolvers = {
       return await User.findOne({ _id: userId });
     },
 
-    getAllOpenGroups: async (_, _, context) => {
+    getAllOpenGroups: async (_, _args, context) => {
       if (context.user) {
         return await Group.find({ type: "open" });
       }
@@ -49,7 +49,7 @@ const resolvers = {
       return { ...getGroup.toObject(), isMember, isGroupOwner };
     },
 
-    searchGroupByTag: async (_, { tags }, _) => {
+    searchGroupByTag: async (_, { tags }, _ctx) => {
       const query = { tags: { $in: tags }, type: "open" };
 
       try {

@@ -1,71 +1,53 @@
-import './navbar.css';
-import { FaRocketchat, FaTasks, FaUsers, FaCog } from 'react-icons/fa';
-import { navColors, navTypes } from './style';
-import { useContext } from 'react';
-import {GroupDataContext} from '../../pages/GroupPage/GroupPage'
+import "./navbar.css";
+import { FaRocketchat, FaTasks, FaUsers, FaCog } from "react-icons/fa";
+import { useContext } from "react";
+import { GroupDataContext } from "../../pages/GroupPage/GroupPage";
+
+export const navColors = {
+  grey: "grey",
+  white: "white"
+};
+
+export const navTypes = {
+  chat: "chat",
+  tasks: "tasks",
+  members: "members",
+  settings: "settings"
+};
 
 const Navbar = ({ currentSection, setCurrentSection }) => {
   const groupData = useContext(GroupDataContext);
+
+  const iconSwitch = (section) => {
+    const sections = {
+      chat: <FaRocketchat />,
+      tasks: <FaTasks />,
+      members: <FaUsers />,
+      settings: <FaCog />,
+      "": <></>
+    };
+    return sections[section];
+  };
+
+  const NavLinks = () =>
+    ["chat", "tasks", "members", "settings"].map((section) => (
+      <li
+        style={{
+          backgroundColor: currentSection === section && "grey",
+          borderRadius: "10px",
+          padding: "7px",
+          color: currentSection === section && "white"
+        }}
+        onClick={() => setCurrentSection(section)}
+      >
+        {iconSwitch(section)}
+      </li>
+    ));
+
   return (
     <div className="group-navbar">
       <h1>{groupData.groupName} Channel</h1>
-      <ul className="navbar-links">
-        <li
-          style={{
-            backgroundColor: currentSection === navTypes.chat && navColors.grey,
-            borderRadius: '10px',
-            padding: '7px',
-            color: currentSection === navTypes.chat && navColors.white,
-          }}
-          onClick={() => {
-            setCurrentSection(navTypes.chat);
-          }}
-        >
-          <FaRocketchat />
-        </li>
-        <li
-          style={{
-            backgroundColor:
-              currentSection === navTypes.tasks && navColors.grey,
-            borderRadius: '10px',
-            padding: '7px',
-            color: currentSection === navTypes.tasks && navColors.white,
-          }}
-          onClick={() => {
-            setCurrentSection(navTypes.tasks);
-          }}
-        >
-          <FaTasks />
-        </li>
-        <li
-          style={{
-            backgroundColor:
-              currentSection === navTypes.members && navColors.grey,
-            borderRadius: '10px',
-            padding: '7px',
-            color: currentSection === navTypes.members && navColors.white,
-          }}
-          onClick={() => {
-            setCurrentSection(navTypes.members);
-          }}
-        >
-          <FaUsers />
-        </li>
-        <li
-          style={{
-            backgroundColor:
-              currentSection === navTypes.settings && navColors.grey,
-            borderRadius: '10px',
-            padding: '7px',
-            color: currentSection === navTypes.settings && navColors.white,
-          }}
-          onClick={() => {
-            setCurrentSection(navTypes.settings);
-          }}
-        >
-          <FaCog />
-        </li>
-      </ul>
+      <ul className="navbar-links">{NavLinks()}</ul>
     </div>
   );
 };
