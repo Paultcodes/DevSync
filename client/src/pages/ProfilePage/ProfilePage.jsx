@@ -33,7 +33,6 @@ const ProfilePage = () => {
   };
 
   const userData = useMemo(() => data?.me || {}, [data]);
-  const { firstName, lastName, email, invites, skills } = userData;
 
   useEffect(() => {
     if (userData) {
@@ -45,6 +44,7 @@ const ProfilePage = () => {
     return <h1>Loading...</h1>;
   }
 
+  const { firstName, lastName, email, invites, skills } = userData;
   return (
     <div className="profile-page">
       <div className="profile-left section">

@@ -82,16 +82,13 @@ const SearchGroupsPage = () => {
 
   const tData = tagsData?.searchGroupByTag;
 
-  console.log(tData);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
-  if (adLoading) return <p>Loading help wanted ads...</p>;
-  if (groupTagsLoading) return <p>loading</p>;
+  if (loading || adLoading || groupTagsLoading) return <p>Loading data ...</p>;
+  if (error) return <p>Encountered an error ... </p>;
 
   const handleClick = (e) => {
     setSearchType(e.target.name);
   };
+
   return (
     <div className="search-group-page">
       <h1>Search groups</h1>
@@ -146,20 +143,19 @@ const SearchGroupsPage = () => {
               {searchTag &&
                 tData.length > 0 &&
                 tData.map((group) => {
+                  const { _id, groupName, members, tags } = group;
+                  const memLength = members.length;
                   return (
-                    <Link
-                      className="group-card-link"
-                      to={`/group/${group._id}`}
-                    >
-                      <h2>{group.groupName}</h2>
+                    <Link className="group-card-link" to={`/group/${_id}`}>
+                      <h2>{groupName}</h2>
                       <p>
-                        {group.members.length}{" "}
-                        {group.members.length > 1 || group.members.length === 0
+                        {memLength}{" "}
+                        {memLength > 1 || memLength === 0
                           ? "members"
                           : "member"}
                       </p>
                       <div className="tag-section-card">
-                        {group.tags.map((tag) => {
+                        {tags.map((tag) => {
                           return <p>{tag}</p>;
                         })}
                       </div>
@@ -170,11 +166,11 @@ const SearchGroupsPage = () => {
           </div>
         ) : searchType === "helpWanted" ? (
           <div className="help-wanted-search">
-            {ads.map((ad) => (
-              <div key={ad._id}>
-                <h3>{ad.title}</h3>
-                <p>contact {ad.group.groupName} to join</p>
-                <p>{ad.description}</p>
+            {ads.map(({ _id, title, group, description }) => (
+              <div key={_id}>
+                <h3>{title}</h3>
+                <p>contact {group.groupName} to join</p>
+                <p>{description}</p>
               </div>
             ))}
           </div>

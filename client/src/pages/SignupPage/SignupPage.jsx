@@ -54,7 +54,7 @@ const SignupPage = () => {
             onChange={handleChange}
             name={name}
             placeholder={ph}
-            type={name === "password" ? name : ""}
+            type={name === "password" ? name : "text"}
           />
         ))}
         ;

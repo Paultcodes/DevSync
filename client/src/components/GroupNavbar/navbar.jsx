@@ -30,7 +30,7 @@ const Navbar = ({ currentSection, setCurrentSection }) => {
   };
 
   const NavLinks = () =>
-    ["chat", "tasks", "members", "settings"].map((section) => (
+    ["chat", "tasks", "members", "settings"].map((section, id) => (
       <li
         style={{
           backgroundColor: currentSection === section && "grey",
@@ -39,6 +39,7 @@ const Navbar = ({ currentSection, setCurrentSection }) => {
           color: currentSection === section && "white"
         }}
         onClick={() => setCurrentSection(section)}
+        key={id}
       >
         {iconSwitch(section)}
       </li>

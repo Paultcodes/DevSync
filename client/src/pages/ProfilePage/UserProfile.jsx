@@ -13,7 +13,6 @@ const UserProfile = () => {
   });
 
   const profileData = useMemo(() => data?.getProfile || {}, [data]);
-
   useEffect(() => {
     if (profileData) {
       setPicSource(pics[profileData.firstName?.charAt(0).toLowerCase()]);
@@ -23,6 +22,8 @@ const UserProfile = () => {
   if (loading) {
     return <h1 style={{ textAlign: "center" }}>Loading...</h1>;
   }
+
+  const { firstName, lastName, email, skills } = profileData;
 
   return (
     <div className="profile-page">
@@ -37,13 +38,13 @@ const UserProfile = () => {
         <div className="info-section">
           <h3>Profile</h3>
           <div>
-            <p>{profileData.email}</p>
+            <p>{email}</p>
             <p>GitHub</p>
           </div>
         </div>
         <div className="text-align">
           <h1>
-            {profileData.firstName} {profileData.lastName}
+            {firstName} {lastName}
           </h1>
           <p>Software Engineer</p>
         </div>
@@ -59,8 +60,8 @@ const UserProfile = () => {
           </p>
         </div>
         <div className="tech-skills">
-          {profileData.skills.length > 0 ? (
-            profileData.skills.map((data) => {
+          {skills.length > 0 ? (
+            skills.map((data) => {
               return <p className="skill">{data}</p>;
             })
           ) : (

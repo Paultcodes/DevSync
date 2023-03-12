@@ -14,7 +14,7 @@ const HomePage = () => {
   if (loading) {
     return <h1>Loading</h1>;
   }
-  const invitesLength = userData.invites.length;
+  const invitesLength = userData?.invites?.length || 0;
   return (
     <div className="home">
       <div className="top-front-page">

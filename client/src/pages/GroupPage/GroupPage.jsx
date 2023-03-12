@@ -60,6 +60,7 @@ const GroupPage = () => {
       </div>
     );
   }
+
   return (
     <GroupDataContext.Provider value={groupData}>
       <div className="main-group-div">
