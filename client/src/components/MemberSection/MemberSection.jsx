@@ -1,23 +1,18 @@
-import UserCard from '../UserCards/UseCard';
-import {
-  ButtonOne,
-  ButtonTwo,
-  ButtonThree,
-  ButtonFour,
-} from '../buttons/Buttons';
-import './membersection.css';
-import { useState } from 'react';
-import { InputOne, TextArea, InputTwo } from '../inputs/Inputs';
-import { Link } from 'react-router-dom';
-import { SEARCH_USER } from '../../utils/queries';
+import UserCard from "../UserCards/UseCard";
+import { ButtonOne, ButtonFour } from "../buttons/Buttons";
+import "./membersection.css";
+import { useState } from "react";
+import { InputOne, TextArea, InputTwo } from "../inputs/Inputs";
+import { Link } from "react-router-dom";
+import { SEARCH_USER } from "../../utils/queries";
 import {
   CREATE_HELP_WANTED,
-  INVITE_USER_TO_GROUP,
-} from '../../utils/mutations';
-import { useParams } from 'react-router-dom';
-import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
-import { FaSearch, FaPencilAlt, FaUser, FaPlus } from 'react-icons/fa';
-import auth from '../../utils/auth';
+  INVITE_USER_TO_GROUP
+} from "../../utils/mutations";
+import { useParams } from "react-router-dom";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { FaSearch, FaPencilAlt, FaUser, FaPlus } from "react-icons/fa";
+import auth from "../../utils/auth";
 
 const MemberSection = ({ groupOwner, groupMembers }) => {
   const [showInviteResponse, setShowInviteResponse] = useState(false);
@@ -31,16 +26,15 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
     useMutation(CREATE_HELP_WANTED);
 
   const [helpWantedForm, setHelpWantedForm] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: ""
   });
 
   const handleChange = (e) => {
     setHelpWantedForm((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
-    
   };
 
   const handleInvite = async (userId) => {
@@ -51,8 +45,8 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
     }
 
     try {
-      const { data } = await inviteUserToGroup({
-        variables: { groupId, userId },
+      await inviteUserToGroup({
+        variables: { groupId, userId }
       });
       setShowInviteResponse(true);
     } catch (err) {
@@ -70,13 +64,13 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
     }
 
     try {
-      const { data } = await createHelpWanted({
-        variables: { ...helpWantedForm, groupId },
+      await createHelpWanted({
+        variables: { ...helpWantedForm, groupId }
       });
       setShowHelpResponse(true);
       setHelpWantedForm({
-        title: '',
-        description: '',
+        title: "",
+        description: ""
       });
     } catch (err) {
       console.log(err);
@@ -87,9 +81,9 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
 
   const [searched, setSearched] = useState(false);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [renderForm, setRenderForm] = useState('');
+  const [renderForm, setRenderForm] = useState("");
 
   const [searchUser, { loading, error, data }] = useLazyQuery(SEARCH_USER);
 
@@ -118,21 +112,21 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
         <div className="button-section">
           <ButtonOne
             buttonName={<FaPencilAlt />}
-            onClick={() => setRenderForm('help')}
+            onClick={() => setRenderForm("help")}
           >
-            {' '}
+            {" "}
             Post A Help Wanted Ad
           </ButtonOne>
           <ButtonOne
             buttonName={<FaPlus />}
-            onClick={() => setRenderForm('invite')}
+            onClick={() => setRenderForm("invite")}
           >
-            {' '}
+            {" "}
             Invite A User
           </ButtonOne>
         </div>
       )}
-      {renderForm === 'invite' ? (
+      {renderForm === "invite" ? (
         <div className="invite-form">
           <div className="search-user">
             <InputOne onChange={handleSearch} placeholder="Username" />
@@ -142,7 +136,7 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
           </div>
         </div>
       ) : (
-        renderForm === 'help' && (
+        renderForm === "help" && (
           <div className="help-wanted">
             {showHelpResponse && <p>Help Wanted Posted ✅</p>}
             <InputTwo
@@ -167,7 +161,7 @@ const MemberSection = ({ groupOwner, groupMembers }) => {
         {user && (
           <div>
             {showInviteResponse && (
-              <p style={{ textAlign: 'center' }}>Invite sent ✅</p>
+              <p style={{ textAlign: "center" }}>Invite sent ✅</p>
             )}
             <div className="result-card">
               <Link className="profile-icon" to={`/profile/${user._id}`}>
